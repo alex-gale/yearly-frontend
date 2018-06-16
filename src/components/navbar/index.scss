@@ -1,0 +1,37 @@
+.navbar {
+	display: flex;
+	align-items: center;
+	width: 100%;
+	padding: 10px;
+
+	@media only screen and (max-width: 770px) {
+    flex-direction: column;
+  }
+
+	.main-title {
+		font-family: 'Pacifico', cursive;
+		color: white;
+		font-size: 30px;
+		user-select: none;
+		transition: 0.3s;
+
+		@media only screen and (max-width: 770px) {
+      font-size: 60px;
+    }
+
+		&:hover {
+			color: #cdcdcd;
+		}
+	}
+
+	.page-title {
+		margin-left: 10px;
+		color: white;
+		font-size: 25px;
+		user-select: none;
+
+		@media only screen and (max-width: 770px) {
+      display: none;
+    }
+	}
+}

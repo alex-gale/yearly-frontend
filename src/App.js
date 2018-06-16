@@ -2,21 +2,27 @@ import React from 'react'
 import { Route, BrowserRouter as Router } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
-import './index.css'
+import './index.scss'
 import NavBar from './components/navbar'
+import Footer from './components/footer'
+import Splash from './pages/splash'
 
-export default class App extends React.Component {
-	render() {
-		return (
-			<Router>
-				<div>
-					<Helmet
-						title="Yearly"
-					/>
+function App() {
+	return (
+		<Router>
+			<div className="container">
+				<Helmet
+					title="Yearly"
+				/>
 
-					<NavBar />
+				<NavBar />
+				<div className="page-content">
+					<Route exact path="/" component={Splash} />
 				</div>
-			</Router>
-		)
-	}
+				<Footer />
+			</div>
+		</Router>
+	)
 }
+
+export default App
