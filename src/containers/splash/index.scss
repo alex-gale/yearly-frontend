@@ -7,6 +7,7 @@
 		margin-top: 70px;
 	  text-align: center;
 	  font-size: 50px;
+		color: white;
 
 	  @media only screen and (max-width: 770px) {
 	    margin-top: 30px;
@@ -16,6 +17,7 @@
 
 	.tagline-subtext {
 	  font-size: 20px;
+		color: white;
 	}
 
 	.showcase-area {
@@ -34,7 +36,8 @@
 	    margin: 3vw;
 	    padding: 10px;
 	    overflow: hidden;
-			text-align: center
+			text-align: center;
+			color: white;
 	  }
 	}
 }

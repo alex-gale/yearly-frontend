@@ -2,4 +2,14 @@
 	display: flex;
 	align-items: center;
 	flex-direction: column;
+	flex: 1;
+	height: 100%;
+
+	.card {
+		padding: 10px;
+
+		h1 {
+			text-align: center;
+		}
+	}
 }

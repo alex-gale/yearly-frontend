@@ -13,6 +13,7 @@
 		font-size: 30px;
 		user-select: none;
 		transition: 0.3s;
+		color: white;
 
 		@media only screen and (max-width: 770px) {
       font-size: 60px;
@@ -27,6 +28,7 @@
 		margin-left: 10px;
 		font-size: 25px;
 		user-select: none;
+		color: white;
 
 		@media only screen and (max-width: 770px) {
       display: none;
@@ -37,6 +39,11 @@
 		display: flex;
 		align-items: center;
 		margin-left: auto;
+
+		@media only screen and (max-width: 770px) {
+      margin-left: 0px;
+      margin-top: 20px;
+    }
 
 		a {
 			margin-left: 10px;
