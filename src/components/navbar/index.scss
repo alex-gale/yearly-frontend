@@ -10,7 +10,6 @@
 
 	.main-title {
 		font-family: 'Pacifico', cursive;
-		color: white;
 		font-size: 30px;
 		user-select: none;
 		transition: 0.3s;
@@ -26,12 +25,22 @@
 
 	.page-title {
 		margin-left: 10px;
-		color: white;
 		font-size: 25px;
 		user-select: none;
 
 		@media only screen and (max-width: 770px) {
       display: none;
     }
+	}
+
+	.nav-links {
+		display: flex;
+		align-items: center;
+		margin-left: auto;
+
+		a {
+			margin-left: 10px;
+			margin-right: 10px;
+		}
 	}
 }

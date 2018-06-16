@@ -1,0 +1,23 @@
+.button {
+	padding: 5px;
+	border-radius: 5%;
+	font-weight: bold;
+	font-size: 20px;
+	transition: 0.3s;
+	border: 3px solid #064061;
+
+	&.button-solid {
+		background-color: #064061;
+
+		&:hover {
+			background-color: #05344f;
+			border: 3px solid #05344f;
+		}
+	}
+
+	&.button-outline {
+		&:hover {
+			background-color: #064061;
+		}
+	}
+}

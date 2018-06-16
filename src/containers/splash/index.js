@@ -6,7 +6,7 @@ function Splash() {
 	return (
 		<div className="splash-content">
 			<h1 className="tagline-header">What will you do this year?</h1>
-			<p className="tagline-subtext">Track your year with <span className="tagline-title">Yearly</span></p>
+			<p className="tagline-subtext">Track your year with <span className="yearly-title">Yearly</span></p>
 			<div className="showcase-area">
 				<div className="showcase-object">
 					<h2>Showcase #1</h2>

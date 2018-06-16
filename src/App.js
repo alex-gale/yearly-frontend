@@ -1,13 +1,13 @@
 import React from 'react'
-import { Route, BrowserRouter as Router } from 'react-router-dom'
+import { BrowserRouter as Router } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 
+import NavRoute from './components/nav-route'
 import './index.scss'
-import NavBar from './components/navbar'
-import Footer from './components/footer'
-import Splash from './pages/splash'
+import Splash from './containers/splash'
+import Login from './containers/login'
 
-function App() {
+const App = () => {
 	return (
 		<Router>
 			<div className="container">
@@ -15,11 +15,8 @@ function App() {
 					title="Yearly"
 				/>
 
-				<NavBar />
-				<div className="page-content">
-					<Route exact path="/" component={Splash} />
-				</div>
-				<Footer />
+				<NavRoute title="home" exact path="/" component={Splash} />
+				<NavRoute title="login" path="/login" component={Login} />
 			</div>
 		</Router>
 	)
