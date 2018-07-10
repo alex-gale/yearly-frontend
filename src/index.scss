@@ -31,6 +31,18 @@ noscript {
   text-align: center;
 }
 
+form {
+	all: inherit;
+}
+
+.separate-line {
+	width: 90%;
+	max-width: 500px;
+	height: 1px;
+	margin: 10px;
+	background-color: gray;
+}
+
 .container {
 	display: flex;
 	flex-direction: column;

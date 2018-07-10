@@ -6,6 +6,7 @@
 	transition: 0.3s;
 	border: 3px solid #064061;
 	color: white;
+	cursor: pointer;
 
 	&.button-solid {
 		background-color: #064061;
@@ -20,5 +21,11 @@
 		&:hover {
 			background-color: #064061;
 		}
+	}
+
+	&.button-wide {
+		width: 100%;
+		max-width: 400px;
+		border-radius: 10px;
 	}
 }

@@ -1,0 +1,18 @@
+.text-input {
+	width: 100%;
+	max-width: 500px;
+	padding: 10px;
+	font-size: 20px;
+	outline: none;
+	border: none;
+	border-bottom: 1px solid #a7a7a7;
+	transition: 0.5s;
+
+	&:focus {
+		border-bottom: 1px solid black;
+	}
+
+	&::placeholder {
+		color: #7d7d7d;
+	}
+}
