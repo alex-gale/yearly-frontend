@@ -41,13 +41,15 @@ Button.propTypes = {
 	children: PropTypes.node.isRequired,
 	to: PropTypes.string,
 	buttontype: PropTypes.oneOf(['outline', 'solid']),
-	submit: PropTypes.bool
+	submit: PropTypes.bool,
+	wide: PropTypes.bool
 }
 
 Button.defaultProps = {
 	to: '',
 	buttontype: 'solid',
-	submit: false
+	submit: false,
+	wide: false
 }
 
 export default Button

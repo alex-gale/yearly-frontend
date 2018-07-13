@@ -1,0 +1,119 @@
+.dash-content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	flex: 1;
+
+	h1, h2 {
+		color: white;
+	}
+
+	h2 {
+		margin-top: 15px;
+	}
+
+	.card {
+		margin: 10px;
+	}
+
+	.date-display {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 100%;
+		padding: 10px;
+		text-align: center;
+		background-color: #bbbbbb;
+		border-top-left-radius: 20px;
+		border-top-right-radius: 20px;
+		font-size: 20px;
+		font-weight: bold;
+		position: relative;
+	}
+
+	.day-main {
+		display: flex;
+		width: 100%;
+		padding: 10px;
+		padding-left: 20px;
+		padding-right: 20px;
+
+		.mood {
+			float: left;
+		}
+
+		.day-note {
+			width: 100%;
+			margin-left: 20px;
+			font-size: 18px;
+		}
+	}
+
+	.mood {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 50px;
+		min-height: 50px;
+		max-height: 50px;
+		background-color: gray;
+		border-radius: 100%;
+		transition: 0.3s;
+		cursor: pointer;
+
+		@media only screen and (max-width: 400px) {
+			width: 10vw;
+			height: 10vw;
+		}
+
+		&:hover {
+			opacity: 0.7;
+			box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+		}
+
+		img {
+			width: 30px;
+			height: 30px;
+		}
+	}
+
+	.mood-0 {background-color: #cc3131}
+	.mood-1 {background-color: #ff9a13}
+	.mood-2 {background-color: #fffc00}
+	.mood-3 {background-color: #21eb00}
+	.mood-4 {background-color: #128000}
+
+	.day-items {
+		width: 90%;
+	}
+
+	.item {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		margin-top: 10px;
+		margin-bottom: 10px;
+
+		.item-icon {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			min-width: 50px;
+			max-width: 50px;
+			min-height: 50px;
+			max-height: 50px;
+			background-color: gray;
+			border-radius: 100%;
+			margin-right: 10px;
+
+			img {
+				width: 35px;
+				height: 35px;
+			}
+		}
+
+		p {
+			margin: 10px;
+		}
+	}
+}

@@ -1,9 +1,10 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-import NavBar from '../navbar'
+import './index.scss'
 import Footer from '../footer'
+import Button from '../button'
 
 const NavRoute = (props) => {
 	const {
@@ -18,7 +19,14 @@ const NavRoute = (props) => {
 			render={() => {
 				return (
 					<React.Fragment>
-						<NavBar title={title} />
+						<nav className="navbar">
+							<Link className="main-title" to="/">Yearly</Link>
+							<span className="page-title">| {props.title.toUpperCase()}</span>
+
+							<div className="nav-links">
+								<Button to="/login" buttontype="solid">Login</Button>
+							</div>
+						</nav>
 						<div className="page-content">
 							{component()}
 						</div>

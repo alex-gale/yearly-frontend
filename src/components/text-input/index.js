@@ -5,11 +5,12 @@ import './index.scss'
 
 const TextInput = (props) => {
 	const {
-		type
+		type,
+		...rest
 	} = props
 
 	return (
-		<input type={type} className="text-input" {...props} />
+		<input type={type} {...rest} className="text-input" />
 	)
 }
 

@@ -6,6 +6,7 @@ import NavRoute from './components/nav-route'
 import './index.scss'
 import Splash from './containers/splash'
 import Login from './containers/login'
+import Dashboard from './containers/dashboard'
 
 const App = () => {
 	return (
@@ -17,6 +18,7 @@ const App = () => {
 
 				<NavRoute title="home" exact path="/" component={Splash} />
 				<NavRoute title="login" path="/login" component={Login} />
+				<NavRoute title="dashboard" path="/dashboard" component={Dashboard} />
 			</div>
 		</Router>
 	)

@@ -39,7 +39,6 @@ module.exports = {
 	],
 	parser: 'babel-eslint',
 	extends: [
-		'airbnb',
 		'plugin:import/errors'
 	],
 	rules: {
@@ -68,11 +67,6 @@ module.exports = {
 		'no-control-regex': 0,
 		'no-else-return': 0,
 		'no-plusplus': 0,
-		// jsx rules
-    "jsx-a11y/anchor-is-valid": [ "error", {
-      "components": [ "Link" ],
-      "specialLink": [ "to" ]
-    }],
 		'jsx-quotes': 0,
 		'react/jsx-filename-extension': [0, {
 			extensions: ['.js', '.jsx']
