@@ -21,7 +21,7 @@ const NavRoute = (props) => {
 					<React.Fragment>
 						<nav className="navbar">
 							<Link className="main-title" to="/">Yearly</Link>
-							<span className="page-title">| {props.title.toUpperCase()}</span>
+							<span className="page-title">| {title.toUpperCase()}</span>
 
 							<div className="nav-links">
 								<Button to="/login" buttontype="solid">Login</Button>

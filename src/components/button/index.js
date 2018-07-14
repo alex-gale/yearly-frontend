@@ -11,14 +11,24 @@ const Button = (props) => {
 		buttontype,
 		submit,
 		wide,
+		active,
 		...rest
 	} = props
 
 	const buttonTypeClass = buttontype === 'solid' ? 'button-solid' : 'button-outline'
-	const buttonWideClass = wide ? 'button-wide' : null
-	const classes = `button ${buttonTypeClass} ${buttonWideClass}`
+	const buttonWideClass = wide ? 'button-wide' : ''
+	const buttonActiveClass = !active ? 'button-disabled' : ''
+	const classes = `button ${buttonTypeClass} ${buttonWideClass} ${buttonActiveClass}`.trim()
 
-	if (props.submit) {
+	if (!active) {
+		return (
+			<div className={classes}>
+				{children}
+			</div>
+		)
+	}
+
+	if (submit) {
 		return (
 			<button type="submit" className={classes} {...rest}>
 				{children}
@@ -42,14 +52,16 @@ Button.propTypes = {
 	to: PropTypes.string,
 	buttontype: PropTypes.oneOf(['outline', 'solid']),
 	submit: PropTypes.bool,
-	wide: PropTypes.bool
+	wide: PropTypes.bool,
+	active: PropTypes.bool
 }
 
 Button.defaultProps = {
 	to: '',
 	buttontype: 'solid',
 	submit: false,
-	wide: false
+	wide: false,
+	active: true
 }
 
 export default Button

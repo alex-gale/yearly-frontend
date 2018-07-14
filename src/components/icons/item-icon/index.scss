@@ -1,0 +1,20 @@
+.item-icon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 50px;
+	max-width: 50px;
+	min-height: 50px;
+	max-height: 50px;
+	background-color: #919191;
+	border-radius: 100%;
+	margin-right: 10px;
+	font-weight: bold;
+	font-size: 20px;
+	user-select: none;
+
+	img {
+		width: 34px;
+		height: 34px;
+	}
+}

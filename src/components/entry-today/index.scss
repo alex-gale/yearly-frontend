@@ -38,31 +38,44 @@
 		width: 100%;
 		padding-bottom: 20px;
 
-		.item-container {
-			display: flex;
-			flex-direction: column;
-			justify-content: center;
-			width: 90%;
+		p {
+			font-weight: bold;
 		}
 
-		.new-item {
+		.item-container {
 			display: flex;
-			align-items: center;
-			justify-content: center;
+			flex-wrap: wrap;
 			width: 90%;
-			height: 75px;
-			border-radius: 10px;
-			border: 1px dashed #a1a1a1;
-			color: #a1a1a1;
-			font-size: 40px;
-			user-select: none;
-			transition: 0.3s;
-			cursor: pointer;
-			outline: none;
+			margin-bottom: 10px;
+			text-align: center;
 
-			&:hover {
-				color: #4a4a4a;
-				border: 1px dashed #4a4a4a;
+			.item {
+				margin-top: 10px;
+			}
+
+			.new-item {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				align-self: flex-start;
+				min-width: 50px;
+				max-width: 50px;
+				min-height: 50px;
+				max-height: 50px;
+				border-radius: 100%;
+				border: 1px dashed #a1a1a1;
+				color: #a1a1a1;
+				font-size: 40px;
+				user-select: none;
+				transition: 0.3s;
+				cursor: pointer;
+				outline: none;
+				margin-top: 10px;
+
+				&:hover {
+					color: #4a4a4a;
+					border: 1px dashed #4a4a4a;
+				}
 			}
 		}
 

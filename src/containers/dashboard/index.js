@@ -4,13 +4,30 @@ import shortid from 'shortid'
 import './index.scss'
 import Card from '../../components/card'
 import EntryToday from '../../components/entry-today'
-import itemIcons from '../../assets/item-icons'
-import moodIcons from '../../assets/mood-icons'
+import MoodIcon from '../../components/icons/mood-icon'
+import ItemIcon from '../../components/icons/item-icon'
 
 const tempData = {
 	success: true,
 	data: [
-		
+		{
+			date: '2018-06-14 16:32:48.752',
+			mood: 3,
+			note: 'This is test data. It must be at least two lines long to test the text wrap capabilities of this item.',
+			items: [
+				'programming',
+				'gaming'
+			]
+		},
+		{
+			date: '2018-06-13 16:32:48.752',
+			mood: 4,
+			note: 'This is another test data, but it is in the past.',
+			items: [
+				'gaming',
+				'holy things'
+			]
+		}
 	]
 }
 
@@ -27,9 +44,6 @@ const Dashboard = () => {
 			{days.length > 0 ?
 				days.map((day) => {
 					const date = new Date(day.date).toDateString()
-					const moodIcon = moodIcons.filter((icon) => {
-						return icon.mood === day.mood
-					})[0] // [0] because it returns an array
 
 					return (
 						<Card key={shortid.generate()}>
@@ -37,24 +51,17 @@ const Dashboard = () => {
 								{date}
 							</div>
 							<div className="day-main">
-								<div className={`mood mood-${day.mood}`}>
-									<img src={moodIcon.icon} />
-								</div>
+								<MoodIcon mood={day.mood} />
 								<p className="day-note">{day.note}</p>
 							</div>
 
 							<div className="separate-line" />
+							<p className="activities">Activities</p>
+
 							<div className="day-items">
 								{day.items.map((item) => {
-									const itemIcon = itemIcons.filter((icon) => {
-										return icon.type === item.type
-									})[0] // [0] because it returns an array
-
 									return (
-										<div key={shortid.generate()} className="item">
-											<div className="item-icon" title={item.type}>{itemIcon && <img src={itemIcon.icon} alt={item.type} />}</div>
-											<p>{item.note}</p>
-										</div>
+										<ItemIcon key={shortid.generate()} type={item} />
 									)
 								})}
 							</div>

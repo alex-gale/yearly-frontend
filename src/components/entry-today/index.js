@@ -5,8 +5,11 @@ import './index.scss'
 import Card from '../card'
 import TextArea from '../text-area'
 import Button from '../button'
+import AddItem from '../add-item'
 import CloseIcon from '../../assets/close.svg'
 import moodIcons from '../../assets/mood-icons'
+import MoodIcon from '../icons/mood-icon'
+import ItemIcon from '../icons/item-icon'
 
 const getDate = () => {
 	const date = new Date()
@@ -18,27 +21,41 @@ class EntryToday extends React.Component {
 		super(props)
 		this.state = {
 			selectedMood: null,
-			moodIcon: null,
-			items: []
+			moodNote: '',
+			items: [],
+			itemNoteBuffer: []
 		}
 
 		this.selectMood = this.selectMood.bind(this)
+		this.handleMoodNoteChange = this.handleMoodNoteChange.bind(this)
 		this.handleItemAdd = this.handleItemAdd.bind(this)
+		this.handleItemSave = this.handleItemSave.bind(this)
+		this.handleModalClose = this.handleModalClose.bind(this)
 		this.handleClose = this.handleClose.bind(this)
 	}
 
 	selectMood(mood) {
-		const moodIcon = mood !== null ? moodIcons.filter((icon) => {
-			return icon.mood === mood
-		})[0] : null
+		this.setState({ selectedMood: mood })
+	}
 
-		this.setState({ selectedMood: mood, moodIcon: moodIcon.icon })
+	handleMoodNoteChange(event) {
+		this.setState({ moodNote: event.target.value })
 	}
 
 	handleItemAdd() {
+		this.setState({ currentModal: <AddItem onClose={this.handleModalClose} onSave={ (itemType) => { this.handleItemSave(itemType) } } /> })
+	}
+
+	handleItemSave(itemType) {
 		const { items } = this.state
-		items.push(emptyItem)
+		items.push({
+			type: itemType
+		})
 		this.setState({ items })
+	}
+
+	handleModalClose() {
+		this.setState({ currentModal: null })
 	}
 
 	handleClose() {
@@ -61,19 +78,23 @@ class EntryToday extends React.Component {
 						{this.state.selectedMood === null ?
 							moodIcons.map((mood, i) => {
 								return (
-									<div key={shortid.generate()} className={`mood mood-${i}`} onClick={() => { this.selectMood(i) }} title={mood.name}>
-										<img src={mood.icon} />
-									</div>
+									<MoodIcon
+										key={shortid.generate()}
+										onClick={() => { this.selectMood(i) }}
+										mood={i}
+									/>
 								)
 							}) :
-							<div className={`mood mood-${this.state.selectedMood}`}>
-								<img src={this.state.moodIcon} />
-							</div>
+							<MoodIcon mood={this.state.selectedMood} />
 						}
 
 						{this.state.selectedMood !== null ?
 							<div className="note-entry">
-								<TextArea placeholder="How was your day?" />
+								<TextArea
+									value={this.state.moodNote}
+									onChange={this.handleMoodNoteChange}
+									placeholder="How was your day?"
+								/>
 							</div> : null
 						}
 					</div>
@@ -81,21 +102,23 @@ class EntryToday extends React.Component {
 					{this.state.selectedMood !== null ?
 						<div className="selected-view">
 							<div className="separate-line" />
+							<p>Today's Activities</p>
 
 							<div className="item-container">
-								{this.state.items.map(() => {
+								{this.state.items.map((item, i) => {
 									return (
 										<div key={shortid.generate()} className="item">
-											<div className="item-icon" />
-											<TextArea placeholder="Notes" />
+											<ItemIcon type={item.type} />
 										</div>
 									)
 								})}
+								<div className="new-item" onClick={this.handleItemAdd}>+</div>
 							</div>
-							<div className="new-item" onClick={this.handleItemAdd}>+</div>
 							<div className="save-button">
-								<Button>Save</Button>
+								<Button active={this.state.moodNote.length >= 3}>Save</Button>
 							</div>
+
+							{this.state.currentModal}
 						</div> : null
 					}
 				</div>
