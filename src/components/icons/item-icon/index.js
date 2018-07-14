@@ -15,8 +15,9 @@ const ItemIcon = (props) => {
 	})[0] // [0] because it returns an array
 
 	return (
-		<div className="item-icon" title={type} {...rest}>
+		<div className="item-icon" {...rest}>
 			{itemObject ? <img src={itemObject.icon} alt={type} /> : type.charAt(0)}
+			<span className="hover-text">{type}</span>
 		</div>
 	)
 }

@@ -65,8 +65,13 @@
 	.day-items {
 		display: flex;
 		justify-content: center;
+		flex-wrap: wrap;
 		width: 90%;
 		margin-top: 10px;
 		margin-bottom: 10px;
+	}
+
+	.item {
+		margin-top: 10px;
 	}
 }

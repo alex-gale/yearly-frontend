@@ -49,19 +49,12 @@
 			margin-bottom: 10px;
 			text-align: center;
 
-			.item {
-				margin-top: 10px;
-			}
-
 			.new-item {
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				align-self: flex-start;
-				min-width: 50px;
-				max-width: 50px;
-				min-height: 50px;
-				max-height: 50px;
+				width: 50px;
+				height: 50px;
 				border-radius: 100%;
 				border: 1px dashed #a1a1a1;
 				color: #a1a1a1;
@@ -70,6 +63,8 @@
 				transition: 0.3s;
 				cursor: pointer;
 				outline: none;
+				margin-left: 5px;
+				margin-right: 5px;
 				margin-top: 10px;
 
 				&:hover {

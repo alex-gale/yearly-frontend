@@ -5,7 +5,7 @@ import './index.scss'
 import Card from '../card'
 import TextArea from '../text-area'
 import Button from '../button'
-import AddItem from '../add-item'
+import ItemEditor from '../item-editor'
 import CloseIcon from '../../assets/close.svg'
 import moodIcons from '../../assets/mood-icons'
 import MoodIcon from '../icons/mood-icon'
@@ -43,14 +43,47 @@ class EntryToday extends React.Component {
 	}
 
 	handleItemAdd() {
-		this.setState({ currentModal: <AddItem onClose={this.handleModalClose} onSave={ (itemType) => { this.handleItemSave(itemType) } } /> })
+		const modal =	(
+			<ItemEditor
+				onClose={this.handleModalClose}
+				editType="add"
+				onSave={ (itemType) => { this.handleItemSave(itemType, null) } }
+			/>
+		)
+		this.setState({ currentModal: modal })
 	}
 
-	handleItemSave(itemType) {
+	handleItemEdit(index) {
+		const modal = (
+			<ItemEditor
+				onClose={this.handleModalClose}
+				editType="edit"
+				onSave={(itemType) => { this.handleItemSave(itemType, index) }}
+				onDelete={() => { this.handleItemDelete(index) }}
+				type={this.state.items[index].type}
+			/>
+		)
+
+		this.setState({ currentModal: modal })
+	}
+
+	handleItemSave(itemType, index) {
 		const { items } = this.state
-		items.push({
-			type: itemType
-		})
+		if (index !== null) {
+			items[index] = {
+				type: itemType
+			}
+		} else {
+			items.push({
+				type: itemType
+			})
+		}
+		this.setState({ items })
+	}
+
+	handleItemDelete(index) {
+		const { items } = this.state
+		items.splice(index, 1)
 		this.setState({ items })
 	}
 
@@ -107,7 +140,7 @@ class EntryToday extends React.Component {
 							<div className="item-container">
 								{this.state.items.map((item, i) => {
 									return (
-										<div key={shortid.generate()} className="item">
+										<div key={shortid.generate()} className="item" onClick={() => { this.handleItemEdit(i) }}>
 											<ItemIcon type={item.type} />
 										</div>
 									)

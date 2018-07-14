@@ -2,7 +2,7 @@ import React from 'react'
 
 import './index.scss'
 
-function Splash() {
+const Splash = () => {
 	return (
 		<div className="splash-content">
 			<h1 className="tagline-header">What will you do this year?</h1>

@@ -5,6 +5,8 @@ import PropTypes from 'prop-types'
 import './index.scss'
 import Footer from '../footer'
 import Button from '../button'
+import UserDropdown from '../user-dropdown'
+import { isLoggedIn, decodedToken } from '../../lib/login'
 
 const NavRoute = (props) => {
 	const {
@@ -12,6 +14,9 @@ const NavRoute = (props) => {
 		component,
 		...rest
 	} = props
+
+	const PageContent = component
+	const tokenContent = isLoggedIn() ? decodedToken() : null
 
 	return (
 		<Route
@@ -22,13 +27,19 @@ const NavRoute = (props) => {
 						<nav className="navbar">
 							<Link className="main-title" to="/">Yearly</Link>
 							<span className="page-title">| {title.toUpperCase()}</span>
-
-							<div className="nav-links">
-								<Button to="/login" buttontype="solid">Login</Button>
-							</div>
+							{isLoggedIn() ?
+								<div className="nav-links">
+									<Button to="/dashboard" buttontype="solid">Dashboard</Button>
+									<UserDropdown username={tokenContent.username} />
+								</div>
+								:
+								<div className="nav-links">
+									<Button to="/login" buttontype="solid">Login</Button>
+								</div>
+							}
 						</nav>
 						<div className="page-content">
-							{component()}
+							<PageContent />
 						</div>
 						<Footer />
 					</React.Fragment>
