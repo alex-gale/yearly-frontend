@@ -1,10 +1,36 @@
-.entry-today {
+@mixin wrapText {
+	overflow-wrap: break-word;
+	word-wrap: break-word;
+	word-break: break-word;
+	hyphens: auto;
+}
+
+.item {
+	margin-top: 10px;
+}
+
+.date-display {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	padding: 10px;
+	text-align: center;
+	background-color: #bbbbbb;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+	font-size: 20px;
+	font-weight: bold;
+	position: relative;
+}
+
+.day-editor {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
 
-	.close-today {
+	.close-entry {
 		width: 20px;
 		height: 20px;
 		position: absolute;
@@ -31,7 +57,7 @@
 		}
 	}
 
-	.selected-view {
+	.item-area {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
@@ -75,13 +101,52 @@
 		}
 
 		.save-button {
+			display: flex;
+			align-items: center;
+			justify-content: flex-end;
 			width: 100%;
-			margin-top: 20px;
+			padding-left: 10px;
+			text-align: right;
 
-			.button {
+			.button, p {
 				float: right;
 				margin-right: 30px;
 			}
 		}
+	}
+}
+
+.display-day {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
+
+	.day-main {
+		display: flex;
+		width: 100%;
+		padding: 10px;
+		padding-left: 20px;
+		padding-right: 20px;
+
+		.mood {
+			float: left;
+		}
+
+		.day-note {
+			width: 100%;
+			margin-left: 20px;
+			font-size: 18px;
+
+			@include wrapText;
+		}
+	}
+
+	.day-items {
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		width: 90%;
+		margin-bottom: 10px;
 	}
 }

@@ -15,23 +15,32 @@ const callLoginApi = (username, password, callback) => {
 		.then(result => { return result.json() })
 		.then(data => {
 			if (data.success) {
-				callback(null, data.data.token)
+				return callback(null, data.data.token)
 			} else {
-				callback(new Error(data.data), null)
+				return callback(new Error(data.data), null)
 			}
 		})
 }
 
 const isLoggedIn = () => {
-	const localStorage = window.localStorage
-	if (localStorage.getItem('token')) {
+	const token = window.localStorage.getItem('token')
+	if (token) {
 		return true
 	}
 
 	return false
 }
 
-const decodedToken = () => {
+const getToken = () => {
+	const token = window.localStorage.getItem('token')
+	if (token) {
+		return token
+	}
+
+	return false
+}
+
+const getDecodedToken = () => {
 	const token = window.localStorage.getItem('token')
 	if (token) {
 		return jwtDecode(token)
@@ -43,5 +52,6 @@ const decodedToken = () => {
 export {
 	callLoginApi,
 	isLoggedIn,
-	decodedToken
+	getToken,
+	getDecodedToken
 }

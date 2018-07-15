@@ -6,7 +6,7 @@ import './index.scss'
 import Footer from '../footer'
 import Button from '../button'
 import UserDropdown from '../user-dropdown'
-import { isLoggedIn, decodedToken } from '../../lib/login'
+import { isLoggedIn, getDecodedToken } from '../../lib/login'
 
 const NavRoute = (props) => {
 	const {
@@ -16,7 +16,7 @@ const NavRoute = (props) => {
 	} = props
 
 	const PageContent = component
-	const tokenContent = isLoggedIn() ? decodedToken() : null
+	const tokenContent = isLoggedIn() ? getDecodedToken() : null
 
 	return (
 		<Route
