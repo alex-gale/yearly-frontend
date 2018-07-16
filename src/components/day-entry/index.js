@@ -5,24 +5,19 @@ import './index.scss'
 import Card from '../card'
 import ActiveDayEntry from './active-day-entry'
 import DisplayDay from './display-day'
-import TodayEntry from './today-entry'
 
 class DayEntry extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			day: JSON.parse(JSON.stringify(this.props.day)),
-			submittedDay: JSON.parse(JSON.stringify(this.props.day)),
-			status: this.props.status,
-			message: ''
+			status: this.props.status
 		}
 
 		this.handleModalClose = this.handleModalClose.bind(this)
 		this.handleClose = this.handleClose.bind(this)
-	}
-
-	handleDaySave() {
-		// do this one day
+		this.handleSave = this.handleSave.bind(this)
+		this.handleEdit = this.handleEdit.bind(this)
 	}
 
 	handleModalClose() {
@@ -33,22 +28,33 @@ class DayEntry extends React.Component {
 		this.setState({ status: 'display' })
 	}
 
+	handleSave(day) {
+		this.setState({ day })
+	}
+
+	handleEdit() {
+		this.setState({ status: 'edit' })
+	}
+
 	render() {
 		return (
 			<Card>
 				{this.state.status === 'display' ?
 					<DisplayDay
 						day={this.state.day}
+						onEdit={this.handleEdit}
 					/> :
-					this.props.status === 'today' ?
-						<TodayEntry
+					this.state.status === 'today' ?
+						<ActiveDayEntry
+							today
+							message={this.state.message}
 							day={this.state.day}
 						/> :
 						<ActiveDayEntry
 							day={this.state.day}
 							message={this.state.message}
-							onSave={(day) => { this.handleDaySave(day) }}
 							onClose={this.handleClose}
+							onSave={(day) => { this.handleSave(day) }}
 						/>
 				}
 			</Card>
@@ -58,7 +64,7 @@ class DayEntry extends React.Component {
 
 DayEntry.propTypes = {
 	day: PropTypes.object,
-	status: PropTypes.oneOf(['today', 'edit', 'display']).isRequired,
+	status: PropTypes.oneOf(['today', 'edit', 'display']),
 }
 
 DayEntry.defaultProps = {
@@ -67,7 +73,8 @@ DayEntry.defaultProps = {
 		mood: null,
 		note: '',
 		items: []
-	}
+	},
+	status: 'display'
 }
 
 export default DayEntry

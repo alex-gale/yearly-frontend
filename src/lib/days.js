@@ -5,7 +5,7 @@ const saveDay = (day, callback) => {
 		return callback(new Error("You must be logged in to save a day."))
 	}
 
-	fetch('http://api.yearly.pro/days', {
+	fetch('https://api.yearly.pro/days', {
 		method: 'PUT',
 		headers: {
 			Accept: 'application/json, text/plain, */*',
@@ -29,7 +29,7 @@ const getDays = (callback) => {
 		return callback(new Error("You must be logged in to get a day."))
 	}
 
-	fetch('http://api.yearly.pro/days', {
+	fetch('https://api.yearly.pro/days', {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json, text/plain, */*',
@@ -52,7 +52,7 @@ const getToday = (callback) => {
 		return callback(new Error("You must be logged in to get a day."))
 	}
 
-	fetch('http://api.yearly.pro/days/today', {
+	fetch('https://api.yearly.pro/days/today', {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json, text/plain, */*',

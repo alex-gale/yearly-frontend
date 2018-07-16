@@ -1,7 +1,7 @@
 import jwtDecode from 'jwt-decode'
 
 const callLoginApi = (username, password, callback) => {
-	fetch('http://api.yearly.pro/auth', {
+	fetch('https://api.yearly.pro/auth', {
 		method: 'POST',
 		headers: {
 			Accept: 'application/json, text/plain, */*',

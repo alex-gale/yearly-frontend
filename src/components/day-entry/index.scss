@@ -24,24 +24,24 @@
 	position: relative;
 }
 
+.close-entry, .edit-entry {
+	width: 20px;
+	height: 20px;
+	position: absolute;
+	right: 15px;
+	cursor: pointer;
+	transition: 0.3s;
+
+	&:hover {
+		opacity: 0.7
+	}
+}
+
 .day-editor {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	width: 100%;
-
-	.close-entry {
-		width: 20px;
-		height: 20px;
-		position: absolute;
-		right: 15px;
-		cursor: pointer;
-		transition: 0.3s;
-
-		&:hover {
-			opacity: 0.7
-		}
-	}
 
 	.mood-selector {
 		display: flex;

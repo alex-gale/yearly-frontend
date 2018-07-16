@@ -2,6 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import shortid from 'shortid'
 
+import EditIcon from '../../../assets/edit.svg'
 import MoodIcon from '../../icons/mood-icon'
 import ItemIcon from '../../icons/item-icon'
 
@@ -13,6 +14,9 @@ const DisplayDay = (props) => {
 		<div className="display-day">
 			<div className="date-display">
 				{date}
+				<div className="edit-entry" onClick={props.onEdit}>
+					<img src={EditIcon} alt="Edit" />
+				</div>
 			</div>
 			<div className="day-main">
 				<MoodIcon mood={day.mood} />
@@ -39,7 +43,12 @@ const DisplayDay = (props) => {
 }
 
 DisplayDay.propTypes = {
-	day: PropTypes.object.isRequired
+	day: PropTypes.object.isRequired,
+	onEdit: PropTypes.func
+}
+
+DisplayDay.defaultProps = {
+	onEdit: null
 }
 
 export default DisplayDay

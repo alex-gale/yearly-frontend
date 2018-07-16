@@ -7,7 +7,9 @@ import Button from '../../button'
 import ItemEditor from '../../item-editor'
 import CloseIcon from '../../../assets/close.svg'
 import MoodIcon from '../../icons/mood-icon'
+import moodIcons from '../../../assets/mood-icons'
 import ItemIcon from '../../icons/item-icon'
+import { saveDay } from '../../../lib/days'
 
 const getDate = (date = new Date()) => {
 	return date.toDateString()
@@ -21,6 +23,7 @@ class ActiveDayEntry extends React.Component{
 			submittedDay: JSON.parse(JSON.stringify(this.props.day))
 		}
 
+		this.handleMoodChange = this.handleMoodChange.bind(this)
 		this.handleMoodNoteChange = this.handleMoodNoteChange.bind(this)
 		this.handleItemAdd = this.handleItemAdd.bind(this)
 		this.handleItemEdit = this.handleItemEdit.bind(this)
@@ -28,6 +31,13 @@ class ActiveDayEntry extends React.Component{
 		this.handleItemDelete = this.handleItemDelete.bind(this)
 		this.handleModalClose = this.handleModalClose.bind(this)
 		this.handleSave = this.handleSave.bind(this)
+		this.handleClose = this.handleClose.bind(this)
+	}
+
+	handleMoodChange(mood) {
+		let day = Object.assign({}, this.state.day)
+		day.mood = mood
+		this.setState({ day })
 	}
 
 	handleMoodNoteChange(event) {
@@ -83,79 +93,112 @@ class ActiveDayEntry extends React.Component{
 
 	handleSave() {
 		const day = JSON.parse(JSON.stringify(this.state.day))
-		this.setState({ submittedDay: day })
-		this.props.onSave(day)
+		this.setState({ message: '' })
+
+		saveDay(day, (err, message) => {
+			if (err) {
+				return this.setState({ message: err.message })
+			}
+
+			if (!this.props.today) {
+				this.props.onSave(day)
+				this.props.onClose()
+			} else {
+				this.setState({ message, submittedDay: day })
+			}
+		})
+	}
+
+	handleClose() {
+		this.props.onClose()
 	}
 
 	render() {
 		return (
 			<div className="day-editor">
 				<div className="date-display">
-					{getDate()}
-					<div className="close-entry" onClick={this.props.onClose}>
-						<img src={CloseIcon} alt="close" />
-					</div>
+					{getDate(new Date(this.state.day.date))}
+					{!this.props.today ?
+						<div className="close-entry" onClick={this.handleClose}>
+							<img src={CloseIcon} alt="Close" />
+						</div> : null
+					}
 				</div>
-
 				<div className="mood-selector">
-					<MoodIcon mood={this.state.day.mood} />
-					<div className="note-entry">
-						<TextArea
-							value={this.state.day.note}
-							onChange={this.handleMoodNoteChange}
-							placeholder="How was your day?"
-						/>
-					</div>
-				</div>
-
-				<div className="item-area">
-					<div className="separate-line" />
-					<p>Activities</p>
-
-					<div className="item-container">
-						{this.state.day.items.map((item, i) => {
+					{this.state.day.mood === null ?
+						moodIcons.map((mood, i) => {
 							return (
-								<div key={shortid.generate()} className="item" onClick={() => { this.handleItemEdit(i) }}>
-									<ItemIcon type={item} />
-								</div>
+								<MoodIcon
+									key={shortid.generate()}
+									onClick={() => { this.handleMoodChange(i) }}
+									mood={i}
+								/>
 							)
-						})}
-						<div className="new-item" onClick={this.handleItemAdd}>+</div>
-					</div>
-					<div className="save-button">
-						<p className="error-message">{this.props.message}</p>
-						<Button
-							active={
-								this.state.day.note.length >= 3 &&
-								JSON.stringify(this.state.day) !== JSON.stringify(this.state.submittedDay)
-							}
-							onClick={this.handleSave}
-						>
-							Save
-						</Button>
-					</div>
+						}) :
+						<MoodIcon
+							mood={this.state.day.mood}
+							onClick={() => { this.handleMoodChange(null) }}
+						/>
+					}
 
-					{this.state.currentModal}
+					{this.state.day.mood !== null ?
+						<div className="note-entry">
+							<TextArea
+								value={this.state.day.note}
+								onChange={this.handleMoodNoteChange}
+								placeholder="How was your day?"
+							/>
+						</div> : null
+					}
 				</div>
+
+				{this.state.day.mood !== null ?
+					<div className="item-area">
+						<div className="separate-line" />
+						<p>Today's Activities</p>
+
+						<div className="item-container">
+							{this.state.day.items.map((item, i) => {
+								return (
+									<div key={shortid.generate()} className="item" onClick={() => { this.handleItemEdit(i) }}>
+										<ItemIcon type={item} />
+									</div>
+								)
+							})}
+							<div className="new-item" onClick={this.handleItemAdd}>+</div>
+						</div>
+						<div className="save-button">
+							<p className="error-message">{this.state.message}</p>
+							<Button
+								active={
+									this.state.day.note.length >= 3 &&
+									JSON.stringify(this.state.day) !== JSON.stringify(this.state.submittedDay)
+								}
+								onClick={this.handleSave}
+							>
+								Save
+							</Button>
+						</div>
+
+						{this.state.currentModal}
+					</div> : null
+				}
 			</div>
 		)
 	}
 }
 
 ActiveDayEntry.propTypes = {
-	day: PropTypes.object,
-	onClose: PropTypes.func.isRequired,
-	onSave: PropTypes.func.isRequired,
-	message: PropTypes.string
+	day: PropTypes.object.isRequired,
+	onSave: PropTypes.func,
+	onClose: PropTypes.func,
+	today: PropTypes.bool
 }
 
 ActiveDayEntry.defaultProps = {
-	day: {
-		mood: null,
-		note: '',
-		items: []
-	},
-	message: ''
+	onClose: null,
+	onSave: null,
+	today: false
 }
 
 export default ActiveDayEntry
