@@ -1,4 +1,4 @@
-.login-content {
+.register-content {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
@@ -13,16 +13,20 @@
 		padding: 10px;
 
 		h1 {
-			text-align: center;
-
-			@media only screen and (max-width: 440px) {
-				font-size: 7vw;
-			}
+			color: black;
 		}
 
-		.text-input {
-			max-width: 400px;
+		.form-section {
+			display: inherit;
+			flex-direction: inherit;
+			align-items: inherit;
+			width: inherit;
 			margin: 10px;
+
+			.text-input {
+				max-width: 400px;
+				margin: 5px;
+			}
 		}
 
 		.button {

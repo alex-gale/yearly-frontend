@@ -168,7 +168,7 @@ class ActiveDayEntry extends React.Component{
 							<div className="new-item" onClick={this.handleItemAdd}>+</div>
 						</div>
 						<div className="save-button">
-							<p className="error-message">{this.state.message}</p>
+							<p className="input-message">{this.state.message}</p>
 							<Button
 								active={
 									this.state.day.note.length >= 3 &&

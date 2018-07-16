@@ -1,7 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import shortid from 'shortid'
-import { withRouter } from "react-router-dom"
 
 import './index.scss'
 import DayEntry from '../../components/day-entry'
@@ -58,7 +57,7 @@ class Dashboard extends React.Component {
 }
 
 Dashboard.propTypes = {
-	history: PropTypes.object
+	history: PropTypes.object.isRequired
 }
 
-export default withRouter(Dashboard)
+export default Dashboard

@@ -1,12 +1,11 @@
 import React from 'react'
-import { withRouter } from "react-router-dom"
 import PropTypes from 'prop-types'
 
 import './index.scss'
 import Card from '../../components/card'
 import TextInput from '../../components/text-input'
 import Button from '../../components/button'
-import { callLoginApi, isLoggedIn } from '../../lib/login'
+import { login, isLoggedIn } from '../../lib/login'
 
 class Login extends React.Component {
 	constructor(props) {
@@ -14,7 +13,7 @@ class Login extends React.Component {
 		this.state = {
 			username: '',
 			password: '',
-			errorMessage: ''
+			message: ''
 		}
 
 		this.handleChange = this.handleChange.bind(this)
@@ -36,12 +35,13 @@ class Login extends React.Component {
 			username, password
 		} = this.state
 
-		callLoginApi(username, password, (err, token) => {
+		this.setState({ message: '' })
+
+		login(username, password, (err, token) => {
 			if (err) {
-				return this.setState({ errorMessage: err.message })
+				return this.setState({ message: err.message })
 			}
 
-			this.setState({ errorMessage: '' })
 			window.localStorage.setItem('token', token)
 			window.location = "/dashboard"
 		})
@@ -74,7 +74,7 @@ class Login extends React.Component {
 						/>
 						<Button submit wide>Login</Button>
 					</form>
-					<p className="error-message">{this.state.errorMessage}</p>
+					<p className="input-message">{this.state.message}</p>
 				</Card>
 			</div>
 		)
@@ -82,7 +82,7 @@ class Login extends React.Component {
 }
 
 Login.propTypes = {
-	history: PropTypes.object
+	history: PropTypes.object.isRequired
 }
 
-export default withRouter(Login)
+export default Login

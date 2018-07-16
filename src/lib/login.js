@@ -1,6 +1,6 @@
 import jwtDecode from 'jwt-decode'
 
-const callLoginApi = (username, password, callback) => {
+const login = (username, password, callback) => {
 	fetch('https://api.yearly.pro/auth', {
 		method: 'POST',
 		headers: {
@@ -50,7 +50,7 @@ const getDecodedToken = () => {
 }
 
 export {
-	callLoginApi,
+	login,
 	isLoggedIn,
 	getToken,
 	getDecodedToken

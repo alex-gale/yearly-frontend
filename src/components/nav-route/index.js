@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { Route, Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
@@ -21,9 +22,13 @@ const NavRoute = (props) => {
 	return (
 		<Route
 			{...rest}
-			render={() => {
+			render={(props) => {
 				return (
 					<React.Fragment>
+						<Helmet
+							title={`Yearly | ${title}`}
+						/>
+
 						<nav className="navbar">
 							<Link className="main-title" to="/">Yearly</Link>
 							<span className="page-title">| {title.toUpperCase()}</span>
@@ -39,7 +44,7 @@ const NavRoute = (props) => {
 							}
 						</nav>
 						<div className="page-content">
-							<PageContent />
+							<PageContent {...props} />
 						</div>
 						<Footer />
 					</React.Fragment>
