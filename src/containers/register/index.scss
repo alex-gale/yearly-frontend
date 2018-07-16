@@ -1,0 +1,36 @@
+.register-content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	flex: 1;
+	padding-top: 60px;
+
+	@media only screen and (max-width: 770px) {
+		padding-top: 10px;
+	}
+
+	.card {
+		padding: 10px;
+
+		h1 {
+			color: black;
+		}
+
+		.form-section {
+			display: inherit;
+			flex-direction: inherit;
+			align-items: inherit;
+			width: inherit;
+			margin: 10px;
+
+			.text-input {
+				max-width: 400px;
+				margin: 5px;
+			}
+		}
+
+		.button {
+			margin: 10px;
+		}
+	}
+}

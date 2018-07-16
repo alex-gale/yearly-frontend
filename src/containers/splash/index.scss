@@ -1,0 +1,43 @@
+.splash-content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+
+	.tagline-header {
+		margin-top: 70px;
+	  text-align: center;
+	  font-size: 50px;
+		color: white;
+
+	  @media only screen and (max-width: 770px) {
+	    margin-top: 30px;
+	    font-size: 40px;
+	  }
+	}
+
+	.tagline-subtext {
+	  font-size: 20px;
+		color: white;
+	}
+
+	.showcase-area {
+		display: flex;
+	  justify-content: center;
+	  flex-wrap: wrap;
+		margin-top: 100px;
+
+		@media only screen and (max-width: 1120px) {
+	    margin-top: 20px;
+	  }
+
+	  .showcase-object {
+	    width: 300px;
+	    height: 300px;
+	    margin: 3vw;
+	    padding: 10px;
+	    overflow: hidden;
+			text-align: center;
+			color: white;
+	  }
+	}
+}
