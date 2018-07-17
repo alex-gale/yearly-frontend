@@ -20,6 +20,7 @@
   ],
   "start_url": "/dashboard",
   "display": "standalone",
+	"orientation": "portrait",
   "theme_color": "#0f132f",
   "background_color": "#0f132f"
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import shortid from 'shortid'
+import nprogress from 'nprogress'
 
 import './index.scss'
 import DayEntry from '../../components/day-entry'
@@ -21,6 +22,8 @@ class Dashboard extends React.Component {
 			this.props.history.push('/login')
 		}
 
+		nprogress.start()
+
 		getDays((err, days) => {
 			this.setState({ days, loadingPrevious: false })
 		})
@@ -28,6 +31,10 @@ class Dashboard extends React.Component {
 		getToday((err, today) => {
 			this.setState({ today, loadingToday: false })
 		})
+	}
+
+	componentDidMount() {
+		nprogress.done()
 	}
 
 	render() {

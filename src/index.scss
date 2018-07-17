@@ -37,6 +37,14 @@ form {
 	width: inherit;
 }
 
+#nprogress .bar {
+  background-color: #0a6acc;
+}
+
+#nprogress .peg {
+  box-shadow: none;
+}
+
 .separate-line {
 	width: 90%;
 	max-width: 500px;

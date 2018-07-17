@@ -24,6 +24,32 @@ const saveDay = (day, callback) => {
 		})
 }
 
+const deleteDay = (date, callback) => {
+	if (!isLoggedIn()) {
+		return callback(new Error("You must be logged in to delete a day."))
+	}
+
+	fetch ('https://api.yearly.pro/days', {
+		method: 'DELETE',
+		headers: {
+			Accept: 'application/json, text/plain, */*',
+			'Content-Type': 'application/json',
+			'x-access-token': getToken()
+		},
+		body: JSON.stringify({
+			date
+		})
+	})
+		.then(result => { return result.json() })
+		.then(data => {
+			if (data.success) {
+				callback(null, data.data)
+			} else {
+				return callback(new Error(data.data))
+			}
+		})
+}
+
 const getDays = (callback) => {
 	if (!isLoggedIn()) {
 		return callback(new Error("You must be logged in to get a day."))
@@ -40,9 +66,9 @@ const getDays = (callback) => {
 		.then(result => { return result.json() })
 		.then(data => {
 			if (data.success) {
-				callback(null, data.data.days)
+				return callback(null, data.data.days)
 			} else {
-				callback(new Error(data.data))
+				return callback(new Error(data.data))
 			}
 		})
 }
@@ -63,15 +89,16 @@ const getToday = (callback) => {
 		.then(result => { return result.json() })
 		.then(data => {
 			if (data.success) {
-				callback(null, data.data)
+				return callback(null, data.data)
 			} else {
-				callback(new Error(data.data))
+				return callback(new Error(data.data))
 			}
 		})
 }
 
 export {
 	saveDay,
+	deleteDay,
 	getDays,
 	getToday
 }

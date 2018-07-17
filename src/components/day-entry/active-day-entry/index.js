@@ -9,7 +9,7 @@ import CloseIcon from '../../../assets/close.svg'
 import MoodIcon from '../../icons/mood-icon'
 import moodIcons from '../../../assets/mood-icons'
 import ItemIcon from '../../icons/item-icon'
-import { saveDay } from '../../../lib/days'
+import { saveDay, deleteDay } from '../../../lib/days'
 
 const getDate = (date = new Date()) => {
 	return date.toDateString()
@@ -20,7 +20,8 @@ class ActiveDayEntry extends React.Component{
 		super(props)
 		this.state = {
 			day: JSON.parse(JSON.stringify(this.props.day)),
-			submittedDay: JSON.parse(JSON.stringify(this.props.day))
+			submittedDay: JSON.parse(JSON.stringify(this.props.day)),
+			pending: false
 		}
 
 		this.handleMoodChange = this.handleMoodChange.bind(this)
@@ -31,6 +32,7 @@ class ActiveDayEntry extends React.Component{
 		this.handleItemDelete = this.handleItemDelete.bind(this)
 		this.handleModalClose = this.handleModalClose.bind(this)
 		this.handleSave = this.handleSave.bind(this)
+		this.handleDelete = this.handleDelete.bind(this)
 		this.handleClose = this.handleClose.bind(this)
 	}
 
@@ -93,9 +95,11 @@ class ActiveDayEntry extends React.Component{
 
 	handleSave() {
 		const day = JSON.parse(JSON.stringify(this.state.day))
-		this.setState({ message: '' })
+		this.setState({ message: '', pending: true })
 
 		saveDay(day, (err, message) => {
+			this.setState({ pending: false })
+
 			if (err) {
 				return this.setState({ message: err.message })
 			}
@@ -106,6 +110,18 @@ class ActiveDayEntry extends React.Component{
 			} else {
 				this.setState({ message, submittedDay: day })
 			}
+		})
+	}
+
+	handleDelete() {
+		this.setState({ message: '' })
+
+		deleteDay(this.state.day.date, (err, message) => {
+			if (err) {
+				return this.setState({ message: err.message })
+			}
+
+			this.setState({ message })
 		})
 	}
 
@@ -125,7 +141,7 @@ class ActiveDayEntry extends React.Component{
 					}
 				</div>
 				<div className="mood-selector">
-					{this.state.day.mood === null ?
+					{this.state.day.mood === null || this.state.day.mood < 0 ?
 						moodIcons.map((mood, i) => {
 							return (
 								<MoodIcon
@@ -137,11 +153,11 @@ class ActiveDayEntry extends React.Component{
 						}) :
 						<MoodIcon
 							mood={this.state.day.mood}
-							onClick={() => { this.handleMoodChange(null) }}
+							onClick={() => { this.handleMoodChange(-1) }}
 						/>
 					}
 
-					{this.state.day.mood !== null ?
+					{this.state.day.mood !== null && this.state.day.mood >= 0 ?
 						<div className="note-entry">
 							<TextArea
 								value={this.state.day.note}
@@ -167,12 +183,15 @@ class ActiveDayEntry extends React.Component{
 							})}
 							<div className="new-item" onClick={this.handleItemAdd}>+</div>
 						</div>
-						<div className="save-button">
+						<div className="options-buttons">
 							<p className="input-message">{this.state.message}</p>
+
 							<Button
 								active={
 									this.state.day.note.length >= 3 &&
-									JSON.stringify(this.state.day) !== JSON.stringify(this.state.submittedDay)
+									this.state.day.mood >= 0 &&
+									JSON.stringify(this.state.day) !== JSON.stringify(this.state.submittedDay) &&
+									this.state.pending
 								}
 								onClick={this.handleSave}
 							>

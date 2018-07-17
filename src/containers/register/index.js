@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import nprogress from 'nprogress'
 
 import './index.scss'
 import Card from '../../components/card'
@@ -12,7 +13,7 @@ class Register extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			inviteCode: this.props.match.params.invite,
+			inviteCode: this.props.match.params.invite || '',
 			username: '',
 			email: '',
 			password: '',
@@ -26,6 +27,12 @@ class Register extends React.Component {
 		if (isLoggedIn()) {
 			this.props.history.push('/dashboard')
 		}
+
+		nprogress.start()
+	}
+
+	componentDidMount() {
+		nprogress.done()
 	}
 
 	handleChange(e) {
@@ -78,6 +85,8 @@ class Register extends React.Component {
 								onChange={this.handleChange}
 								placeholder="Username"
 								name="username"
+								maxLength="16"
+								minLength="3"
 								required
 							/>
 							<TextInput
@@ -95,6 +104,7 @@ class Register extends React.Component {
 								placeholder="Password"
 								type="password"
 								name="password"
+								minLength="6"
 								required
 							/>
 							<TextInput
@@ -103,6 +113,7 @@ class Register extends React.Component {
 								placeholder="Confirm Password"
 								type="password"
 								name="confirmPassword"
+								minLength="6"
 								required
 							/>
 						</div>
@@ -117,7 +128,11 @@ class Register extends React.Component {
 
 Register.propTypes = {
 	history: PropTypes.object.isRequired,
-	match: PropTypes.object.isRequired
+	match: PropTypes.shape({
+		params: PropTypes.shape({
+			invite: PropTypes.string
+		})
+	})
 }
 
 export default Register

@@ -1,13 +1,17 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
+import nprogress from 'nprogress'
 
-import NavRoute from './components/nav-route'
 import './index.scss'
+import 'nprogress/nprogress.css'
+import NavRoute from './components/nav-route'
 import Splash from './containers/splash'
 import Register from './containers/register'
 import Login from './containers/login'
 import Dashboard from './containers/dashboard'
+
+nprogress.configure({ showSpinner: false })
 
 const App = () => {
 	return (

@@ -77,7 +77,14 @@ class ItemEditor extends React.Component {
 							{this.props.editType === 'edit' ?
 								<Button onClick={this.handleDelete}>Delete</Button> : null
 							}
-							<Button submit>Save</Button>
+							<Button
+								submit
+								active={
+									this.state.currentType.length <= 30 &&
+									this.state.currentType.length > 0}
+							>
+									Save
+							</Button>
 						</div>
 					</form>
 				</div>

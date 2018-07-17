@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import nprogress from 'nprogress'
 
 import './index.scss'
 import Card from '../../components/card'
@@ -22,6 +23,12 @@ class Login extends React.Component {
 		if (isLoggedIn()) {
 			this.props.history.push('/dashboard')
 		}
+
+		nprogress.start()
+	}
+
+	componentDidMount() {
+		nprogress.done()
 	}
 
 	handleChange(e) {
@@ -61,6 +68,7 @@ class Login extends React.Component {
 							placeholder="Email/Username"
 							id="username"
 							name="username"
+							maxLength="16"
 							required
 						/>
 						<TextInput
@@ -70,6 +78,7 @@ class Login extends React.Component {
 							type="password"
 							id="password"
 							name="password"
+							minLength="6"
 							required
 						/>
 						<Button submit wide>Login</Button>
