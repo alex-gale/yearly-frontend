@@ -32,7 +32,7 @@ const NavRoute = (props) => {
 						<nav className="navbar">
 							<Link className="main-title" to="/">Yearly</Link>
 							<span className="page-title">| {title.toUpperCase()}</span>
-							{isLoggedIn() ?
+							{tokenContent ?
 								<div className="nav-links">
 									<Button to="/dashboard" buttontype="solid">Dashboard</Button>
 									<UserDropdown username={tokenContent.username} />

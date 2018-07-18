@@ -14,7 +14,8 @@ class Login extends React.Component {
 		this.state = {
 			username: '',
 			password: '',
-			message: ''
+			message: '',
+			pending: false
 		}
 
 		this.handleChange = this.handleChange.bind(this)
@@ -42,10 +43,11 @@ class Login extends React.Component {
 			username, password
 		} = this.state
 
-		this.setState({ message: '' })
+		this.setState({ message: '', pending: true })
 
 		login(username, password, (err, token) => {
 			if (err) {
+				this.setState({ pending: false })
 				return this.setState({ message: err.message })
 			}
 
@@ -81,7 +83,7 @@ class Login extends React.Component {
 							minLength="6"
 							required
 						/>
-						<Button submit wide>Login</Button>
+						<Button submit wide active={!this.state.pending}>Login</Button>
 					</form>
 					<p className="input-message">{this.state.message}</p>
 				</Card>

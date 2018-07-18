@@ -24,7 +24,7 @@
 		display: flex;
 	  justify-content: center;
 	  flex-wrap: wrap;
-		margin-top: 100px;
+		margin-top: 150px;
 
 		@media only screen and (max-width: 1120px) {
 	    margin-top: 20px;
@@ -32,12 +32,17 @@
 
 	  .showcase-object {
 	    width: 300px;
-	    height: 300px;
 	    margin: 3vw;
 	    padding: 10px;
 	    overflow: hidden;
 			text-align: center;
 			color: white;
+
+			img {
+				width: 75px;
+				height: 75px;
+				margin-bottom: 20px;
+			}
 	  }
 	}
 }

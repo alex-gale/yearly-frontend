@@ -43,6 +43,14 @@ class ItemEditor extends React.Component {
 	}
 
 	render() {
+		const filteredItems = itemIcons.filter((item) => {
+			return item.type.indexOf(this.state.currentType.toLowerCase()) !== -1
+		}).sort((a, b) => {
+			if (a.type < b.type) return -1
+			if (a.type > b.type) return 1
+			return 0
+		})
+
 		return (
 			<Modal
 				show={this.state.isOpen}
@@ -60,18 +68,23 @@ class ItemEditor extends React.Component {
 							maxLength="30"
 						/>
 						<div className="search-area">
-							{itemIcons.map((item) => {
-								return (
-									<div
-										key={shortid.generate()}
-										className="search-item"
-										onClick={() => {this.setState({ currentType: item.type })}}
-									>
-										<img src={item.icon} />
-										{item.type}
-									</div>
-								)
-							})}
+							{filteredItems.length > 0 ?
+								filteredItems.map((item) => {
+									return (
+										<div
+											key={shortid.generate()}
+											className="search-item"
+											onClick={() => {this.setState({ currentType: item.type })}}
+										>
+											<img src={item.icon} />
+											{item.type}
+										</div>
+									)
+								}) :
+								<div className="search-item">
+									{this.state.currentType}
+								</div>
+							}
 						</div>
 						<div className="option-buttons">
 							{this.props.editType === 'edit' ?

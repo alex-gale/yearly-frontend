@@ -18,7 +18,8 @@ class Register extends React.Component {
 			email: '',
 			password: '',
 			confirmPassword: '',
-			message: ''
+			message: '',
+			pending: false
 		}
 
 		this.handleChange = this.handleChange.bind(this)
@@ -46,11 +47,12 @@ class Register extends React.Component {
 			inviteCode, username, email, password, confirmPassword
 		} = this.state
 
-		this.setState({ message: '' })
+		this.setState({ message: '', pending: true })
 
 		if (password === confirmPassword) {
 			register(inviteCode, username, email, password, (err, token) => {
 				if (err) {
+					this.setState({ pending: false })
 					return this.setState({ message: err.message })
 				}
 
@@ -58,7 +60,7 @@ class Register extends React.Component {
 				window.location = "/dashboard"
 			})
 		} else {
-			this.setState({ message: "Passwords do not match" })
+			this.setState({ message: "Passwords do not match", pending: false })
 		}
 	}
 
@@ -117,7 +119,7 @@ class Register extends React.Component {
 								required
 							/>
 						</div>
-						<Button submit wide>Register </Button>
+						<Button submit wide active={!this.state.pending}>Register</Button>
 					</form>
 					<p className="input-message">{this.state.message}</p>
 				</Card>

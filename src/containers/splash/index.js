@@ -2,6 +2,9 @@ import React from 'react'
 import nprogress from 'nprogress'
 
 import './index.scss'
+import LockIcon from '../../assets/lock.svg'
+import GraphIcon from '../../assets/graph.svg'
+import ActivityIcon from '../../assets/activity.svg'
 
 class Splash extends React.Component {
 	constructor(props) {
@@ -21,16 +24,19 @@ class Splash extends React.Component {
 				<p className="tagline-subtext">Track your year with <span className="yearly-title">Yearly</span></p>
 				<div className="showcase-area">
 					<div className="showcase-object">
-						<h2>Showcase #1</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rhoncus finibus tempus. Nulla ut ipsum felis. Quisque id finibus lacus, nec rutrum erat. Phasellus sed tincidunt nunc, quis placerat diam. Sed ut venenatis mi. Aenean blandit dolor sit amet mi tincidunt, quis placerat nisl finibus. Suspendisse aliquam mi sapien, sed sagittis ex faucibus laoreet. Mauris placerat, velit et ornare feugiat, felis tortor luctus sem, sed maximus erat felis mattis massa. Nullam non mi a nisi condimentum pharetra.</p>
+						<img src={GraphIcon} />
+						<h2>Mood Tracking</h2>
+						<p>Integrated charts and graphs for tracking your mood day by day</p>
 					</div>
 					<div className="showcase-object">
-						<h2>Showcase #2</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rhoncus finibus tempus. Nulla ut ipsum felis. Quisque id finibus lacus, nec rutrum erat. Phasellus sed tincidunt nunc, quis placerat diam. Sed ut venenatis mi. Aenean blandit dolor sit amet mi tincidunt, quis placerat nisl finibus. Suspendisse aliquam mi sapien, sed sagittis ex faucibus laoreet. Mauris placerat, velit et ornare feugiat, felis tortor luctus sem, sed maximus erat felis mattis massa. Nullam non mi a nisi condimentum pharetra.</p>
+						<img src={ActivityIcon} />
+						<h2>Activity Tracking</h2>
+						<p>Track your daily activities so you never forget what you do each day</p>
 					</div>
 					<div className="showcase-object">
-						<h2>Showcase #3</h2>
-						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce rhoncus finibus tempus. Nulla ut ipsum felis. Quisque id finibus lacus, nec rutrum erat. Phasellus sed tincidunt nunc, quis placerat diam. Sed ut venenatis mi. Aenean blandit dolor sit amet mi tincidunt, quis placerat nisl finibus. Suspendisse aliquam mi sapien, sed sagittis ex faucibus laoreet. Mauris placerat, velit et ornare feugiat, felis tortor luctus sem, sed maximus erat felis mattis massa. Nullam non mi a nisi condimentum pharetra.</p>
+						<img src={LockIcon} />
+						<h2>Encrypted entries</h2>
+						<p>Your entries are encrypted with AES-256, so nobody but you can access them</p>
 					</div>
 				</div>
 			</div>

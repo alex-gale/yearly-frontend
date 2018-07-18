@@ -1,5 +1,7 @@
+import timeout from './timeout'
+
 const register = (invite, username, email, password, callback) => {
-	fetch('https://api.yearly.pro/users', {
+	timeout(10000, fetch('https://api.yearly.pro/users', {
 		method: 'PUT',
 		headers: {
 			Accept: 'application/json, text/plain, */*',
@@ -20,6 +22,9 @@ const register = (invite, username, email, password, callback) => {
 				return callback(new Error(data.data), null)
 			}
 		})
+	).catch(() => {
+		return callback(new Error("Could not connect to database. Please try again later."))
+	})
 }
 
 export {

@@ -11,6 +11,10 @@
 
 	h2 {
 		margin-top: 15px;
+
+		&.error-message {
+			color: #db5151
+		}
 	}
 
 	.activities {

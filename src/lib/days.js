@@ -1,11 +1,12 @@
 import { isLoggedIn, getToken } from './login'
+import timeout from './timeout'
 
 const saveDay = (day, callback) => {
 	if (!isLoggedIn()) {
 		return callback(new Error("You must be logged in to save a day."))
 	}
 
-	fetch('https://api.yearly.pro/days', {
+	timeout(10000, fetch('https://api.yearly.pro/days', {
 		method: 'PUT',
 		headers: {
 			Accept: 'application/json, text/plain, */*',
@@ -22,6 +23,9 @@ const saveDay = (day, callback) => {
 				return callback(new Error(data.data))
 			}
 		})
+	).catch(() => {
+		return callback(new Error("Could not connect to database. Please try again later."))
+	})
 }
 
 const deleteDay = (date, callback) => {
@@ -29,7 +33,7 @@ const deleteDay = (date, callback) => {
 		return callback(new Error("You must be logged in to delete a day."))
 	}
 
-	fetch ('https://api.yearly.pro/days', {
+	timeout(10000, fetch ('https://api.yearly.pro/days', {
 		method: 'DELETE',
 		headers: {
 			Accept: 'application/json, text/plain, */*',
@@ -48,6 +52,9 @@ const deleteDay = (date, callback) => {
 				return callback(new Error(data.data))
 			}
 		})
+	).catch(() => {
+		return callback(new Error("Could not connect to database. Please try again later."))
+	})
 }
 
 const getDays = (callback) => {
@@ -55,7 +62,7 @@ const getDays = (callback) => {
 		return callback(new Error("You must be logged in to get a day."))
 	}
 
-	fetch('https://api.yearly.pro/days', {
+	timeout(10000, fetch('https://api.yearly.pro/days', {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json, text/plain, */*',
@@ -71,6 +78,9 @@ const getDays = (callback) => {
 				return callback(new Error(data.data))
 			}
 		})
+	).catch(() => {
+		return callback(new Error("Could not connect to database. Please try again later."))
+	})
 }
 
 const getToday = (callback) => {
@@ -78,7 +88,7 @@ const getToday = (callback) => {
 		return callback(new Error("You must be logged in to get a day."))
 	}
 
-	fetch('https://api.yearly.pro/days/today', {
+	timeout(10000, fetch('https://api.yearly.pro/days/today', {
 		method: 'GET',
 		headers: {
 			Accept: 'application/json, text/plain, */*',
@@ -91,9 +101,13 @@ const getToday = (callback) => {
 			if (data.success) {
 				return callback(null, data.data)
 			} else {
-				return callback(new Error(data.data))
+				// there should probably be an error here, but it breaks the dashboard
+				return callback()
 			}
 		})
+	).catch(() => {
+		return callback(new Error("Could not connect to database. Please try again later."))
+	})
 }
 
 export {

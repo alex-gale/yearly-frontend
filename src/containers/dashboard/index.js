@@ -15,7 +15,9 @@ class Dashboard extends React.Component {
 		this.state = {
 			loadingToday: true,
 			loadingPrevious: true,
-			days: []
+			days: [],
+			dayMessage: '',
+			todayMessage: ''
 		}
 
 		if (!isLoggedIn()) {
@@ -23,18 +25,26 @@ class Dashboard extends React.Component {
 		}
 
 		nprogress.start()
-
-		getDays((err, days) => {
-			this.setState({ days, loadingPrevious: false })
-		})
-
-		getToday((err, today) => {
-			this.setState({ today, loadingToday: false })
-		})
 	}
 
 	componentDidMount() {
 		nprogress.done()
+
+		getDays((err, days) => {
+			if (err) {
+				return this.setState({ dayMessage: err.message, loadingPrevious: false })
+			} else {
+				this.setState({ days, loadingPrevious: false })
+			}
+		})
+
+		getToday((err, today) => {
+			if (err) {
+				return this.setState({ todayMessage: err.message, loadingToday: false })
+			} else {
+				this.setState({ today, loadingToday: false })
+			}
+		})
 	}
 
 	render() {
@@ -43,11 +53,14 @@ class Dashboard extends React.Component {
 				<h1>Today</h1>
 				{this.state.loadingToday ?
 					<LoadingIcon /> :
-					<DayEntry status="today" day={this.state.today} />
+					this.state.todayMessage.length > 0 ?
+						<h2 className="error-message">{this.state.todayMessage}</h2> :
+						<DayEntry status="today" day={this.state.today} />
 				}
 
 				<div className="separate-line" />
 				<h1>Previous Days</h1>
+
 				{this.state.loadingPrevious ?
 					<LoadingIcon /> :
 					this.state.days.length > 0 ?
@@ -56,7 +69,9 @@ class Dashboard extends React.Component {
 								<DayEntry key={shortid.generate()} day={day} status="display" />
 							)
 						}) :
-						<h2>No content could be loaded.</h2>
+						this.state.dayMessage.length > 0 ?
+							<h2 className="error-message">{this.state.dayMessage}</h2> :
+							<h2>No content could be loaded.</h2>
 				}
 			</div>
 		)

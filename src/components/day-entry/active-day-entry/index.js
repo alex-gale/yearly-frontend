@@ -5,6 +5,7 @@ import shortid from 'shortid'
 import TextArea from '../../text-area'
 import Button from '../../button'
 import ItemEditor from '../../item-editor'
+import LoadingIcon from '../../loading-icon'
 import CloseIcon from '../../../assets/close.svg'
 import MoodIcon from '../../icons/mood-icon'
 import moodIcons from '../../../assets/mood-icons'
@@ -140,6 +141,7 @@ class ActiveDayEntry extends React.Component{
 						</div> : null
 					}
 				</div>
+
 				<div className="mood-selector">
 					{this.state.day.mood === null || this.state.day.mood < 0 ?
 						moodIcons.map((mood, i) => {
@@ -185,13 +187,13 @@ class ActiveDayEntry extends React.Component{
 						</div>
 						<div className="options-buttons">
 							<p className="input-message">{this.state.message}</p>
-
+							{this.state.pending ? <LoadingIcon mini /> : null}
 							<Button
 								active={
 									this.state.day.note.length >= 3 &&
 									this.state.day.mood >= 0 &&
 									JSON.stringify(this.state.day) !== JSON.stringify(this.state.submittedDay) &&
-									this.state.pending
+									!this.state.pending
 								}
 								onClick={this.handleSave}
 							>
