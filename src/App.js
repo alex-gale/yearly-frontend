@@ -10,27 +10,38 @@ import Splash from './containers/splash'
 import Register from './containers/register'
 import Login from './containers/login'
 import Dashboard from './containers/dashboard'
+import { isLoggedIn, validateToken } from './lib/login'
 
 nprogress.configure({ showSpinner: false })
 
-const App = () => {
-	return (
-		<Router>
-			<div className="container">
-				<Helmet
-					title="Yearly"
-				/>
+class App extends React.PureComponent {
+	constructor(props) {
+		super(props)
 
-				<Switch>
-					<NavRoute exact title="Home" path="/" component={Splash} />
-					<NavRoute exact title="Login" path="/login" component={Login} />
-					<NavRoute exact title="Register" path="/register/:invite?" component={Register} />
-					<NavRoute exact title="Dashboard" path="/dashboard" component={Dashboard} />
-					<NavRoute title="not found" component={NotFound} />
-				</Switch>
-			</div>
-		</Router>
-	)
+		if (isLoggedIn()) {
+			validateToken()
+		}
+	}
+
+	render() {
+		return (
+			<Router>
+				<div className="container">
+					<Helmet
+						title="Yearly"
+					/>
+
+					<Switch>
+						<NavRoute exact title="Home" path="/" component={Splash} />
+						<NavRoute exact title="Login" path="/login" component={Login} />
+						<NavRoute exact title="Register" path="/register/:invite?" component={Register} />
+						<NavRoute exact title="Dashboard" path="/dashboard" component={Dashboard} />
+						<NavRoute title="not found" component={NotFound} />
+					</Switch>
+				</div>
+			</Router>
+		)
+	}
 }
 
 const NotFound = () => {

@@ -59,25 +59,26 @@ const getDecodedToken = () => {
 	return false
 }
 
-const validateToken = (token, callback) => {
-	fetch('https://api.yearly.pro/auth/validate', {
-		method: 'POST',
-		headers: {
-			Accept: 'application/json, text/plain, */*',
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify({
-			token
+const validateToken = () => {
+	if (isLoggedIn) {
+		fetch('https://api.yearly.pro/auth/validate', {
+			method: 'POST',
+			headers: {
+				Accept: 'application/json, text/plain, */*',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				token: getToken()
+			})
 		})
-	})
-		.then(result => { return result.json() })
-		.then(data => {
-			if (data.success) {
-				return callback(true)
-			} else {
-				return callback(false)
-			}
-		})
+			.then(result => { return result.json() })
+			.then(data => {
+				if (!data.success) {
+					window.localStorage.removeItem('token')
+					location.reload()
+				}
+			})
+	}
 }
 
 export {
