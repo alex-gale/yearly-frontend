@@ -17,8 +17,12 @@ class Dashboard extends React.Component {
 			loadingPrevious: true,
 			days: [],
 			dayMessage: '',
-			todayMessage: ''
+			todayMessage: '',
+			newDayActive: false
 		}
+
+		this.handleNewDay = this.handleNewDay.bind(this)
+		this.handleCloseNewDay = this.handleCloseNewDay.bind(this)
 
 		if (!isLoggedIn()) {
 			this.props.history.push('/login')
@@ -47,6 +51,14 @@ class Dashboard extends React.Component {
 		})
 	}
 
+	handleNewDay() {
+		this.setState({ newDayActive: true })
+	}
+
+	handleCloseNewDay() {
+		this.setState({ newDayActive: false })
+	}
+
 	render() {
 		return (
 			<div className="dash-content">
@@ -63,15 +75,25 @@ class Dashboard extends React.Component {
 
 				{this.state.loadingPrevious ?
 					<LoadingIcon /> :
-					this.state.days.length > 0 ?
-						this.state.days.map((day) => {
-							return (
-								<DayEntry key={shortid.generate()} day={day} status="display" />
-							)
-						}) :
-						this.state.dayMessage.length > 0 ?
-							<h2 className="error-message">{this.state.dayMessage}</h2> :
-							<h2>No content could be loaded.</h2>
+					this.state.dayMessage.length > 0 ?
+						<h2 className="error-message">{this.state.dayMessage}</h2> :
+						<React.Fragment>
+							{this.state.newDayActive ?
+								<React.Fragment>
+									<DayEntry status="new" onClose={this.handleCloseNewDay} />
+									<div className="separate-line" />
+								</React.Fragment> :
+								<div className="new-day" title="New Day" onClick={this.handleNewDay}>+</div>
+							}
+							{this.state.days.length > 0 ?
+								this.state.days.map((day) => {
+									return (
+										<DayEntry key={shortid.generate()} day={day} status="display" />
+									)
+								}) :
+								<h2>No content could be loaded.</h2>
+							}
+						</React.Fragment>
 				}
 			</div>
 		)

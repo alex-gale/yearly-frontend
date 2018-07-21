@@ -25,7 +25,11 @@ class DayEntry extends React.Component {
 	}
 
 	handleClose() {
-		this.setState({ status: 'display' })
+		if (this.state.status === 'new') {
+			this.props.onClose()
+		} else {
+			this.setState({ status: 'display' })
+		}
 	}
 
 	handleSave(day) {
@@ -44,18 +48,14 @@ class DayEntry extends React.Component {
 						day={this.state.day}
 						onEdit={this.handleEdit}
 					/> :
-					this.state.status === 'today' ?
-						<ActiveDayEntry
-							today
-							message={this.state.message}
-							day={this.state.day}
-						/> :
-						<ActiveDayEntry
-							day={this.state.day}
-							message={this.state.message}
-							onClose={this.handleClose}
-							onSave={(day) => { this.handleSave(day) }}
-						/>
+					<ActiveDayEntry
+						today={this.state.status === 'today'}
+						new={this.state.status === 'new'}
+						message={this.state.message}
+						day={this.state.day}
+						onSave={(day) => { this.handleSave(day) }}
+						onClose={this.handleClose}
+					/>
 				}
 			</Card>
 		)
@@ -64,7 +64,8 @@ class DayEntry extends React.Component {
 
 DayEntry.propTypes = {
 	day: PropTypes.object,
-	status: PropTypes.oneOf(['today', 'edit', 'display']),
+	status: PropTypes.oneOf(['today', 'edit', 'display', 'new']),
+	onClose: PropTypes.func
 }
 
 DayEntry.defaultProps = {
@@ -74,7 +75,8 @@ DayEntry.defaultProps = {
 		note: '',
 		items: []
 	},
-	status: 'display'
+	status: 'display',
+	onClose: null
 }
 
 export default DayEntry

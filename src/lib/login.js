@@ -71,9 +71,12 @@ const validateToken = () => {
 				token: getToken()
 			})
 		})
-			.then(result => { return result.json() })
+			.then(result => {
+				if (result.status === 429) return { success: false, status: 429 }
+				return result.json()
+			})
 			.then(data => {
-				if (!data.success) {
+				if (!data.success && data.status !== 429) {
 					window.localStorage.removeItem('token')
 					location.reload()
 				}

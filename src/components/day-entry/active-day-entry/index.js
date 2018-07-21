@@ -1,11 +1,17 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import shortid from 'shortid'
+import subYears from 'date-fns/sub_years'
+import subDays from 'date-fns/sub_days'
+import isBefore from 'date-fns/is_before'
+import isAfter from 'date-fns/is_after'
+import format from 'date-fns/format'
 
 import TextArea from '../../text-area'
 import Button from '../../button'
 import ItemEditor from '../../item-editor'
 import LoadingIcon from '../../loading-icon'
+import DateEntry from '../../date-entry'
 import CloseIcon from '../../../assets/close.svg'
 import MoodIcon from '../../icons/mood-icon'
 import moodIcons from '../../../assets/mood-icons'
@@ -13,7 +19,10 @@ import ItemIcon from '../../icons/item-icon'
 import { saveDay, deleteDay } from '../../../lib/days'
 
 const getDate = (date = new Date()) => {
-	return date.toDateString()
+	const yearAgo = subYears(new Date(), 1)
+	const dateFormat = isBefore(date, yearAgo) ? 'Do MMM YYYY' : 'dddd Do MMM'
+
+	return format(date, dateFormat)
 }
 
 class ActiveDayEntry extends React.Component{
@@ -27,6 +36,7 @@ class ActiveDayEntry extends React.Component{
 
 		this.handleMoodChange = this.handleMoodChange.bind(this)
 		this.handleMoodNoteChange = this.handleMoodNoteChange.bind(this)
+		this.handleDateChange = this.handleDateChange.bind(this)
 		this.handleItemAdd = this.handleItemAdd.bind(this)
 		this.handleItemEdit = this.handleItemEdit.bind(this)
 		this.handleItemSave = this.handleItemSave.bind(this)
@@ -35,6 +45,12 @@ class ActiveDayEntry extends React.Component{
 		this.handleSave = this.handleSave.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
 		this.handleClose = this.handleClose.bind(this)
+
+		if (props.new) {
+			let day = Object.assign({}, this.state.day)
+			day.date = subDays(new Date(), 1)
+			this.state.day = day
+		}
 	}
 
 	handleMoodChange(mood) {
@@ -47,6 +63,14 @@ class ActiveDayEntry extends React.Component{
 		let day = Object.assign({}, this.state.day)
 		day.note = event.target.value
 		this.setState({ day })
+	}
+
+	handleDateChange(event) {
+		if (!isAfter(event.target.value, subDays(new Date(), 1))) {
+			let day = Object.assign({}, this.state.day)
+			day.date = new Date(event.target.value)
+			this.setState({ day })
+		}
 	}
 
 	handleItemAdd() {
@@ -134,11 +158,19 @@ class ActiveDayEntry extends React.Component{
 		return (
 			<div className="day-editor">
 				<div className="date-display">
-					{getDate(new Date(this.state.day.date))}
-					{!this.props.today ?
+					{this.props.new ?
+						<DateEntry
+							value={format(this.state.day.date, 'YYYY-MM-DD')}
+							max={format(subDays(new Date(), 1), 'YYYY-MM-DD')}
+							onChange={this.handleDateChange}
+						/> :
+						getDate(new Date(this.state.day.date))
+					}
+
+					{!this.props.today &&
 						<div className="close-entry" onClick={this.handleClose}>
 							<img src={CloseIcon} alt="Close" />
-						</div> : null
+						</div>
 					}
 				</div>
 
@@ -159,21 +191,21 @@ class ActiveDayEntry extends React.Component{
 						/>
 					}
 
-					{this.state.day.mood !== null && this.state.day.mood >= 0 ?
+					{(this.state.day.mood !== null && this.state.day.mood >= 0) &&
 						<div className="note-entry">
 							<TextArea
 								value={this.state.day.note}
 								onChange={this.handleMoodNoteChange}
 								placeholder="How was your day?"
 							/>
-						</div> : null
+						</div>
 					}
 				</div>
 
-				{this.state.day.mood !== null ?
+				{this.state.day.mood !== null &&
 					<div className="item-area">
 						<div className="separate-line" />
-						<p>Today's Activities</p>
+						<p>{this.props.today ? 'Today\'s ' : null}Activities</p>
 
 						<div className="item-container">
 							{this.state.day.items.map((item, i) => {
@@ -192,6 +224,7 @@ class ActiveDayEntry extends React.Component{
 								active={
 									this.state.day.note.length >= 3 &&
 									this.state.day.mood >= 0 &&
+									!isAfter(this.state.day.date, new Date()) &&
 									JSON.stringify(this.state.day) !== JSON.stringify(this.state.submittedDay) &&
 									!this.state.pending
 								}
@@ -202,7 +235,7 @@ class ActiveDayEntry extends React.Component{
 						</div>
 
 						{this.state.currentModal}
-					</div> : null
+					</div>
 				}
 			</div>
 		)
@@ -213,13 +246,15 @@ ActiveDayEntry.propTypes = {
 	day: PropTypes.object.isRequired,
 	onSave: PropTypes.func,
 	onClose: PropTypes.func,
-	today: PropTypes.bool
+	today: PropTypes.bool,
+	new: PropTypes.bool
 }
 
 ActiveDayEntry.defaultProps = {
 	onClose: null,
 	onSave: null,
-	today: false
+	today: false,
+	new: false
 }
 
 export default ActiveDayEntry

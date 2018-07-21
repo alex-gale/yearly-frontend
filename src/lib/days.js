@@ -99,13 +99,13 @@ const getToday = (callback) => {
 		.then(result => { return result.json() })
 		.then(data => {
 			if (data.success) {
-				return callback(null, data.data)
+				return callback(null, data.data.day)
 			} else {
-				// there should probably be an error here, but it breaks the dashboard
-				return callback()
+				return callback(new Error(data.data))
 			}
 		})
-	).catch(() => {
+	).catch((err) => {
+		console.log(err)
 		return callback(new Error("Could not connect to database. Please try again later."))
 	})
 }

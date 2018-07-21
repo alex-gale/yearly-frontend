@@ -1,14 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import shortid from 'shortid'
+import subYears from 'date-fns/sub_years'
+import isBefore from 'date-fns/is_before'
+import format from 'date-fns/format'
 
 import EditIcon from '../../../assets/edit.svg'
 import MoodIcon from '../../icons/mood-icon'
 import ItemIcon from '../../icons/item-icon'
 
+const getDate = (date = new Date()) => {
+	const yearAgo = subYears(new Date(), 1)
+	const dateFormat = isBefore(date, yearAgo) ? 'Do MMM YYYY' : 'dddd Do MMM'
+
+	return format(date, dateFormat)
+}
+
 const DisplayDay = (props) => {
 	const day = props.day
-	const date = new Date(day.date).toDateString()
+	const date = getDate(new Date(day.date))
 
 	return (
 		<div className="display-day">

@@ -10,6 +10,7 @@
 }
 
 .date-display {
+	height: 44px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -35,6 +36,10 @@
 	&:hover {
 		opacity: 0.7
 	}
+}
+
+.activities {
+	font-weight: bold;
 }
 
 .day-editor {

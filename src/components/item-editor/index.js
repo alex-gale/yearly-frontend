@@ -28,7 +28,9 @@ class ItemEditor extends React.Component {
 	}
 
 	handleChange(e) {
-		this.setState({ currentType: e.target.value })
+		if (e.target.value.length <= 30) {
+			this.setState({ currentType: e.target.value })
+		}
 	}
 
 	handleDelete() {
@@ -65,7 +67,6 @@ class ItemEditor extends React.Component {
 							value={this.state.currentType}
 							onChange={this.handleChange}
 							placeholder="Item Type"
-							maxLength="30"
 						/>
 						<div className="search-area">
 							{filteredItems.length > 0 ?
