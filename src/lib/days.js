@@ -110,9 +110,37 @@ const getToday = (callback) => {
 	})
 }
 
+const getUsedDates = (callback) => {
+	if (!isLoggedIn()) {
+		return callback(new Error("You must be logged in to get a list of used dates."))
+	}
+
+	timeout(10000, fetch('https://api.yearly.pro/days/dates', {
+		method: 'GET',
+		headers: {
+			Accept: 'application/json, text/plain, */*',
+			'Content-Type': 'application/json',
+			'x-access-token': getToken()
+		}
+	})
+		.then(result => { return result.json() })
+		.then(data =>{
+			if (data.success) {
+				return callback(null, data.data)
+			} else {
+				return callback(new Error(data.data))
+			}
+		})
+	).catch((err) => {
+		console.log(err)
+		return callback(new Error("Could not connect to database. Please try again later."))
+	})
+}
+
 export {
 	saveDay,
 	deleteDay,
 	getDays,
-	getToday
+	getToday,
+	getUsedDates
 }

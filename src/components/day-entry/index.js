@@ -33,7 +33,11 @@ class DayEntry extends React.Component {
 	}
 
 	handleSave(day) {
-		this.setState({ day })
+		if (this.state.status === 'new') {
+			this.props.onSave(day)
+		} else {
+			this.setState({ day })
+		}
 	}
 
 	handleEdit() {
@@ -65,6 +69,7 @@ class DayEntry extends React.Component {
 DayEntry.propTypes = {
 	day: PropTypes.object,
 	status: PropTypes.oneOf(['today', 'edit', 'display', 'new']),
+	onSave: PropTypes.func,
 	onClose: PropTypes.func
 }
 
@@ -76,6 +81,7 @@ DayEntry.defaultProps = {
 		items: []
 	},
 	status: 'display',
+	onSave: null,
 	onClose: null
 }
 

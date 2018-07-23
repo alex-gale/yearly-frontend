@@ -55,6 +55,18 @@ class Dashboard extends React.Component {
 		this.setState({ newDayActive: true })
 	}
 
+	handleSaveNewDay() {
+		this.setState({ loadingPrevious: true })
+
+		getDays((err, days) => {
+			if (err) {
+				return this.setState({ dayMessage: err.message, loadingPrevious: false })
+			} else {
+				this.setState({ days, loadingPrevious: false })
+			}
+		})
+	}
+
 	handleCloseNewDay() {
 		this.setState({ newDayActive: false })
 	}
@@ -80,11 +92,16 @@ class Dashboard extends React.Component {
 						<React.Fragment>
 							{this.state.newDayActive ?
 								<React.Fragment>
-									<DayEntry status="new" onClose={this.handleCloseNewDay} />
+									<DayEntry
+										status="new"
+										onSave={(day) => { this.handleSaveNewDay(day) }}
+										onClose={this.handleCloseNewDay}
+									/>
 									<div className="separate-line" />
 								</React.Fragment> :
 								<div className="new-day" title="New Day" onClick={this.handleNewDay}>+</div>
 							}
+
 							{this.state.days.length > 0 ?
 								this.state.days.map((day) => {
 									return (

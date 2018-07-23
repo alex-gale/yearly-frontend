@@ -2,9 +2,11 @@ import React from 'react'
 import { BrowserRouter as Router, Switch } from 'react-router-dom'
 import { Helmet } from 'react-helmet'
 import nprogress from 'nprogress'
+import { ToastContainer, Slide } from 'react-toastify'
 
-import './index.scss'
+import 'react-toastify/dist/ReactToastify.css'
 import 'nprogress/nprogress.css'
+import './index.scss'
 import NavRoute from './components/nav-route'
 import Splash from './containers/splash'
 import Register from './containers/register'
@@ -36,8 +38,17 @@ class App extends React.PureComponent {
 						<NavRoute exact title="Login" path="/login" component={Login} />
 						<NavRoute exact title="Register" path="/register/:invite?" component={Register} />
 						<NavRoute exact title="Dashboard" path="/dashboard" component={Dashboard} />
-						<NavRoute title="not found" component={NotFound} />
+						<NavRoute title="404" component={NotFound} />
 					</Switch>
+
+					<ToastContainer
+						toastClassName="toast-notification"
+						hideProgressBar
+						position="bottom-right"
+						transition={Slide}
+						pauseOnHover={false}
+						closeButton={false}
+					/>
 				</div>
 			</Router>
 		)
