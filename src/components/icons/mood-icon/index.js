@@ -16,7 +16,7 @@ const MoodIcon = (props) => {
 
 	return (
 		<div className={`mood mood-${mood}`} title={moodObject.name} {...rest}>
-			<img src={moodObject.icon} />
+			<img src={moodObject.icon} alt={moodObject.name} />
 		</div>
 	)
 }

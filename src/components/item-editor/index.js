@@ -77,7 +77,7 @@ class ItemEditor extends React.Component {
 											className="search-item"
 											onClick={() => {this.setState({ currentType: item.type })}}
 										>
-											<img src={item.icon} />
+											<img src={item.icon} alt="" />
 											{item.type}
 										</div>
 									)

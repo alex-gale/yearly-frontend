@@ -39,7 +39,7 @@ class UserDropdown extends React.Component {
 		return (
 			<div className="dropdown" onBlur={this.handleClickOff} tabIndex={0}>
 				<p className="toggle-dropdown" onClick={this.handleToggle}>
-					<img className="arrow-icon" src={this.state.active ? UpArrow : DownArrow} />
+					<img className="arrow-icon" alt="" src={this.state.active ? UpArrow : DownArrow} />
 					{this.props.username}
 				</p>
 				<div className={dropdownClass}>

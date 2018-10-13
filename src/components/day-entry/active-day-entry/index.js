@@ -152,7 +152,6 @@ class ActiveDayEntry extends React.Component{
 				}
 
 				for (let i in dates) {
-					console.log(dates[i])
 					if (isSameDay(dates[i], day.date)) {
 						const formattedDate = format(dates[i], 'DD/MM/YYYY')
 						const modal = (
@@ -164,7 +163,6 @@ class ActiveDayEntry extends React.Component{
 							/>
 						)
 						return this.setState({ currentModal: modal })
-						break
 					} else {
 						// i*1 here because js is stupid
 						if (i*1 + 1 === dates.length) {

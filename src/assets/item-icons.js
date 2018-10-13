@@ -12,6 +12,8 @@ import FlightIcon from './item-icons/flight-icon.svg'
 import ArtIcon from './item-icons/art-icon.svg'
 import GardeningIcon from './item-icons/gardening-icon.svg'
 import MealIcon from './item-icons/meal-icon.svg'
+import WorkIcon from './item-icons/work-icon.svg'
+import ClimbingIcon from './item-icons/climbing-icon.svg'
 
 const itemIcons = [
 	{
@@ -69,6 +71,14 @@ const itemIcons = [
 	{
 		type: 'meal',
 		icon: MealIcon
+	},
+	{
+		type: 'work',
+		icon: WorkIcon
+	},
+	{
+		type: 'climbing',
+		icon: ClimbingIcon
 	}
 ]
 
