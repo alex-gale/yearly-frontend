@@ -17,7 +17,7 @@ self.addEventListener("activate", event => {
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open(CACHE_NAME)
+    Promise.all([caches.open(CACHE_NAME), self.skipWaiting()])
       .then(function(cache) {
         fetch("asset-manifest.json")
           .then(response => {
