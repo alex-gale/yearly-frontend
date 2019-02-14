@@ -73,7 +73,7 @@ class Dashboard extends React.Component {
 
 	render() {
 		return (
-			<div className="dash-content">
+			<div className="content dash-content">
 				<h1>Today</h1>
 				{this.state.loadingToday ?
 					<LoadingIcon /> :
@@ -108,7 +108,7 @@ class Dashboard extends React.Component {
 										<DayEntry key={shortid.generate()} day={day} status="display" />
 									)
 								}) :
-								<h2>No content could be loaded.</h2>
+								<h2>No entries saved. Make some by clicking the + button above!</h2>
 							}
 						</React.Fragment>
 				}

@@ -1,8 +1,4 @@
 .register-content {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	flex: 1;
 	padding-top: 60px;
 
 	@media only screen and (max-width: 770px) {
@@ -14,6 +10,14 @@
 
 		h1 {
 			color: black;
+		}
+
+		p {
+			text-align: center;
+
+			.bold {
+				font-weight: bold;
+			}
 		}
 
 		.form-section {

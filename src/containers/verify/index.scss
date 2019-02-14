@@ -1,0 +1,27 @@
+.verify-content {
+	padding-top: 60px;
+
+  @media only screen and (max-width: 770px) {
+		padding-top: 10px;
+	}
+
+  .card {
+    padding: 10px;
+
+    h1 {
+			color: black;
+		}
+
+    p {
+			text-align: center;
+		}
+
+    a {
+      color: blue;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

@@ -19,7 +19,7 @@ class Splash extends React.Component {
 
 	render() {
 		return (
-			<div className="splash-content">
+			<div className="content splash-content">
 				<h1 className="tagline-header">What will you do this year?</h1>
 				<p className="tagline-subtext">Track your year with <span className="yearly-title">Yearly</span></p>
 				<div className="showcase-area">

@@ -75,6 +75,13 @@ form {
 	padding: 10px;
 }
 
+.content {
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	flex: 1;
+}
+
 .not-found {
 	color: white;
 }

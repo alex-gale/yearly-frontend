@@ -6,6 +6,7 @@ import './index.scss'
 import Card from '../../components/card'
 import TextInput from '../../components/text-input'
 import Button from '../../components/button'
+import LoadingIcon from '../../components/loading-icon'
 import { register } from '../../lib/register'
 import { isLoggedIn } from '../../lib/login'
 
@@ -19,7 +20,8 @@ class Register extends React.Component {
 			password: '',
 			confirmPassword: '',
 			message: '',
-			pending: false
+			pending: false,
+			submitted: false
 		}
 
 		this.handleChange = this.handleChange.bind(this)
@@ -50,14 +52,13 @@ class Register extends React.Component {
 		this.setState({ message: '', pending: true })
 
 		if (password === confirmPassword) {
-			register(inviteCode, username, email, password, (err, token) => {
+			register(inviteCode, username, email, password, (err) => {
 				if (err) {
 					this.setState({ pending: false })
 					return this.setState({ message: err.message })
 				}
 
-				window.localStorage.setItem('token', token)
-				window.location = "/dashboard"
+				this.setState({ submitted: true })
 			})
 		} else {
 			this.setState({ message: "Passwords do not match", pending: false })
@@ -66,62 +67,75 @@ class Register extends React.Component {
 
 	render() {
 		return (
-			<div className="register-content">
+			<div className="content register-content">
 				<Card>
-					<h1>Register</h1>
-					<div className="separate-line" />
+					{this.state.submitted ?
+						<React.Fragment>
+							<h1>Success</h1>
+							<div className="separate-line" />
 
-					<form onSubmit={this.handleSubmit}>
-						<div className="form-section">
-							<TextInput
-								value={this.state.inviteCode}
-								onChange={this.handleChange}
-								placeholder="Invite Code"
-								name="inviteCode"
-								required
-							/>
-						</div>
-						<div className="form-section">
-							<TextInput
-								value={this.state.username}
-								onChange={this.handleChange}
-								placeholder="Username"
-								name="username"
-								maxLength="16"
-								minLength="3"
-								required
-							/>
-							<TextInput
-								value={this.state.email}
-								onChange={this.handleChange}
-								placeholder="Email"
-								name="email"
-								required
-							/>
-						</div>
-						<div className="form-section">
-							<TextInput
-								value={this.state.password}
-								onChange={this.handleChange}
-								placeholder="Password"
-								type="password"
-								name="password"
-								minLength="6"
-								required
-							/>
-							<TextInput
-								value={this.state.confirmPassword}
-								onChange={this.handleChange}
-								placeholder="Confirm Password"
-								type="password"
-								name="confirmPassword"
-								minLength="6"
-								required
-							/>
-						</div>
-						<Button submit wide active={!this.state.pending}>Register</Button>
-					</form>
-					<p className="input-message">{this.state.message}</p>
+							<p>A verification email was sent to <span className="bold">{this.state.email}</span>.</p>
+							<p>Please click the link in the email to activate your account (remember to check your spam!)</p>
+						</React.Fragment>
+						:
+						<React.Fragment>
+							<h1>Register</h1>
+							<div className="separate-line" />
+
+							<form onSubmit={this.handleSubmit}>
+								<div className="form-section">
+									<TextInput
+										value={this.state.inviteCode}
+										onChange={this.handleChange}
+										placeholder="Invite Code"
+										name="inviteCode"
+										required
+									/>
+								</div>
+								<div className="form-section">
+									<TextInput
+										value={this.state.username}
+										onChange={this.handleChange}
+										placeholder="Username"
+										name="username"
+										maxLength="16"
+										minLength="3"
+										required
+									/>
+									<TextInput
+										value={this.state.email}
+										onChange={this.handleChange}
+										placeholder="Email"
+										name="email"
+										required
+									/>
+								</div>
+								<div className="form-section">
+									<TextInput
+										value={this.state.password}
+										onChange={this.handleChange}
+										placeholder="Password"
+										type="password"
+										name="password"
+										minLength="6"
+										required
+									/>
+									<TextInput
+										value={this.state.confirmPassword}
+										onChange={this.handleChange}
+										placeholder="Confirm Password"
+										type="password"
+										name="confirmPassword"
+										minLength="6"
+										required
+									/>
+								</div>
+								<Button submit wide active={!this.state.pending}>Register</Button>
+							</form>
+							{this.state.pending && <LoadingIcon mini />}
+							<p className="input-message">{this.state.message}</p>
+						</React.Fragment>
+					}
 				</Card>
 			</div>
 		)

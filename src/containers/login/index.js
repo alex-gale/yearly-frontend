@@ -6,6 +6,7 @@ import './index.scss'
 import Card from '../../components/card'
 import TextInput from '../../components/text-input'
 import Button from '../../components/button'
+import LoadingIcon from '../../components/loading-icon'
 import { login, isLoggedIn } from '../../lib/login'
 
 class Login extends React.Component {
@@ -58,7 +59,7 @@ class Login extends React.Component {
 
 	render() {
 		return (
-			<div className="login-content">
+			<div className="content login-content">
 				<Card>
 					<h1>Welcome back to <span className="yearly-title">Yearly</span></h1>
 					<div className="separate-line" />
@@ -85,6 +86,7 @@ class Login extends React.Component {
 						/>
 						<Button submit wide active={!this.state.pending}>Login</Button>
 					</form>
+					{this.state.pending && <LoadingIcon mini />}
 					<p className="input-message">{this.state.message}</p>
 				</Card>
 			</div>

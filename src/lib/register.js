@@ -17,7 +17,29 @@ const register = (invite, username, email, password, callback) => {
 		.then(result => { return result.json() })
 		.then(data => {
 			if (data.success) {
-				return callback(null, data.data.token)
+				return callback(null, data.data)
+			} else {
+				return callback(new Error(data.data), null)
+			}
+		})
+	)
+}
+
+const verify = (vhash, callback) => {
+	timeout(10000, fetch('https://api.yearly.pro/users/verify', {
+		method: 'POST',
+		headers: {
+			Accept: 'application/json, text/plain, */*',
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify({
+			vhash
+		})
+	})
+		.then(result => { return result.json() })
+		.then(data => {
+			if (data.success) {
+				return callback(null, data.data)
 			} else {
 				return callback(new Error(data.data), null)
 			}
@@ -28,5 +50,6 @@ const register = (invite, username, email, password, callback) => {
 }
 
 export {
-	register
+	register,
+	verify
 }
