@@ -268,7 +268,9 @@ class ActiveDayEntry extends React.Component{
 									</div>
 								)
 							})}
-							<div className="new-item" onClick={this.handleItemAdd}>+</div>
+							{this.state.day.items.length < 8 ?
+								<div className="new-item" onClick={this.handleItemAdd}>+</div> : null
+							}
 						</div>
 						<div className="save-area">
 							<p className="input-message">{this.state.message}</p>

@@ -8,8 +8,9 @@ import DayEntry from '../../components/day-entry'
 import LoadingIcon from '../../components/loading-icon'
 import { isLoggedIn } from '../../lib/login'
 import { getDays, getToday } from '../../lib/days'
+import { getSettings } from '../../lib/settings'
 
-class Dashboard extends React.Component {
+class Dashboard extends React.PureComponent {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -18,7 +19,8 @@ class Dashboard extends React.Component {
 			days: [],
 			dayMessage: '',
 			todayMessage: '',
-			newDayActive: false
+			newDayActive: false,
+			settings: {}
 		}
 
 		this.handleNewDay = this.handleNewDay.bind(this)
@@ -48,6 +50,10 @@ class Dashboard extends React.Component {
 			} else {
 				this.setState({ today, loadingToday: false })
 			}
+		})
+
+		getSettings((err, settings) => {
+			if (!err) this.setState({ settings })
 		})
 	}
 
@@ -105,7 +111,12 @@ class Dashboard extends React.Component {
 							{this.state.days.length > 0 ?
 								this.state.days.map((day) => {
 									return (
-										<DayEntry key={shortid.generate()} day={day} status="display" />
+										<DayEntry
+											key={shortid.generate()}
+											day={day}
+											status="display"
+											editable={this.state.settings.editing}
+										/>
 									)
 								}) :
 								<h2>No entries saved. Make some by clicking the + button above!</h2>

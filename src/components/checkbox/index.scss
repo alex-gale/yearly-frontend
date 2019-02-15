@@ -1,0 +1,45 @@
+.checkbox {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+
+  label {
+    cursor: pointer;
+  }
+
+  .checkbox-input {
+    display: none;
+
+    &:checked + label svg path {
+  		stroke-dashoffset: 0;
+  	}
+
+    & + label {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      margin-left: 20px;
+      cursor: pointer;
+      user-select: none;
+      border: 3px solid #064061;
+      border-radius: 10%;
+      cursor: pointer;
+      transition: 0.3s;
+
+      svg {
+    		pointer-events: none;
+
+    		path {
+    			fill: none;
+    			stroke: black;
+    			stroke-width: 4px;
+    			stroke-linecap: round;
+    			stroke-linejoin: round;
+    			stroke-dasharray: 100;
+    			stroke-dashoffset: 101;
+    			transition: all 350ms cubic-bezier(1,0,.37,.91);
+    		}
+      }
+    }
+  }
+}

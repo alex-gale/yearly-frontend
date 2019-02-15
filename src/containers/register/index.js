@@ -50,9 +50,12 @@ class Register extends React.Component {
 		} = this.state
 
 		this.setState({ message: '', pending: true })
+    nprogress.start()
 
 		if (password === confirmPassword) {
 			register(inviteCode, username, email, password, (err) => {
+			    nprogress.done()
+			    
 				if (err) {
 					this.setState({ pending: false })
 					return this.setState({ message: err.message })

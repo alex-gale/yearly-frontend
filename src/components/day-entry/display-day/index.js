@@ -24,9 +24,11 @@ const DisplayDay = (props) => {
 		<div className="display-day">
 			<div className="date-display">
 				{date}
-				<div className="edit-entry" onClick={props.onEdit}>
-					<img src={EditIcon} alt="Edit" />
-				</div>
+				{props.editable &&
+					<div className="edit-entry" onClick={props.onEdit}>
+						<img src={EditIcon} alt="Edit" title="Edit" />
+					</div>
+				}
 			</div>
 			<div className="day-main">
 				<MoodIcon mood={day.mood} />
@@ -54,7 +56,8 @@ const DisplayDay = (props) => {
 
 DisplayDay.propTypes = {
 	day: PropTypes.object.isRequired,
-	onEdit: PropTypes.func
+	onEdit: PropTypes.func,
+	editable: PropTypes.bool.isRequired
 }
 
 DisplayDay.defaultProps = {

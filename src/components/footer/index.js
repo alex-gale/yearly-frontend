@@ -5,7 +5,7 @@ import './index.scss'
 function Footer() {
 	return (
 		<footer className="footer">
-			<p>Copyright &copy; Yearly 2018</p>
+			<p>Copyright &copy; Yearly 2019</p>
 		</footer>
 	)
 }

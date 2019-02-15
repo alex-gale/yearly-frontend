@@ -44,7 +44,7 @@ class UserDropdown extends React.Component {
 				</p>
 				<div className={dropdownClass}>
 					<Link to="/dashboard">Dashboard</Link>
-					<p>My Account</p>
+					<Link to="/account">My Account</Link>
 					<p onClick={this.handleLogout}>Logout</p>
 				</div>
 			</div>

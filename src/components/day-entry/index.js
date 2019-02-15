@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import addHours from 'date-fns/add_hours'
 
 import './index.scss'
 import Card from '../card'
@@ -10,8 +11,18 @@ class DayEntry extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			day: JSON.parse(JSON.stringify(this.props.day)),
+			day: Object.assign({}, this.props.day),
 			status: this.props.status
+		}
+
+		// client utc offset
+		const utcDiff = new Date().getTimezoneOffset() / 60
+		// utc offset in data
+		const storedDiff = new Date(this.state.day.date).getTimezoneOffset() / 60
+
+		// if client not in UTC, adjust display date
+		if (utcDiff !== 0 && storedDiff === 0) {
+			this.state.day.date = addHours(this.state.day.date, -utcDiff)
 		}
 
 		this.handleModalClose = this.handleModalClose.bind(this)
@@ -51,6 +62,7 @@ class DayEntry extends React.Component {
 					<DisplayDay
 						day={this.state.day}
 						onEdit={this.handleEdit}
+						editable={this.props.editable}
 					/> :
 					<ActiveDayEntry
 						today={this.state.status === 'today'}
@@ -70,7 +82,8 @@ DayEntry.propTypes = {
 	day: PropTypes.object,
 	status: PropTypes.oneOf(['today', 'edit', 'display', 'new']),
 	onSave: PropTypes.func,
-	onClose: PropTypes.func
+	onClose: PropTypes.func,
+	editable: PropTypes.bool
 }
 
 DayEntry.defaultProps = {
@@ -82,7 +95,8 @@ DayEntry.defaultProps = {
 	},
 	status: 'display',
 	onSave: null,
-	onClose: null
+	onClose: null,
+	editable: false
 }
 
 export default DayEntry

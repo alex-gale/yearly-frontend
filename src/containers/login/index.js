@@ -45,8 +45,10 @@ class Login extends React.Component {
 		} = this.state
 
 		this.setState({ message: '', pending: true })
+    nprogress.start()
 
 		login(username, password, (err, token) => {
+      nprogress.done()
 			if (err) {
 				this.setState({ pending: false })
 				return this.setState({ message: err.message })

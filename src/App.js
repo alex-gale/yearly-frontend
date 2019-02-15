@@ -13,6 +13,7 @@ import Register from './containers/register'
 import Verify from './containers/verify'
 import Login from './containers/login'
 import Dashboard from './containers/dashboard'
+import Account from './containers/account'
 import { isLoggedIn, validateToken } from './lib/login'
 
 nprogress.configure({ showSpinner: false })
@@ -40,6 +41,7 @@ class App extends React.PureComponent {
 						<NavRoute exact title="Register" path="/register/:invite?" component={Register} />
 						<NavRoute exact title="Verify" path="/verify/:vhash?" component={Verify} />
 						<NavRoute exact title="Dashboard" path="/dashboard" component={Dashboard} />
+						<NavRoute exact title="My Account" path="/account" component={Account} />
 						<NavRoute title="404" component={NotFound} />
 					</Switch>
 
