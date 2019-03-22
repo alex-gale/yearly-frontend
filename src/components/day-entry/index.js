@@ -44,11 +44,7 @@ class DayEntry extends React.Component {
 	}
 
 	handleSave(day) {
-		if (this.state.status === 'new') {
-			this.props.onSave(day)
-		} else {
-			this.setState({ day })
-		}
+		this.props.onSave(day)
 	}
 
 	handleEdit() {

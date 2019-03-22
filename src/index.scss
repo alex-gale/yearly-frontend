@@ -17,8 +17,8 @@ html, body {
 body {
 	background: #0f132f;
 
-	@supports (background: linear-gradient(to right, #0f132f 0%, #003366 100%)) {
-		background: linear-gradient(to right, #0f132f 0%, #003366 100%);
+	@supports (background: linear-gradient(to left, #0f132f 0%, #003366 100%)) {
+		background: linear-gradient(to left, #0f132f 0%, #003366 100%);
 	}
 }
 
