@@ -8,11 +8,14 @@
 	background-color: gray;
 	border-radius: 100%;
 	transition: 0.3s;
-	cursor: pointer;
 
-	&:hover {
-		opacity: 0.7;
-		box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+	&.selectable {
+		cursor: pointer;
+
+		&:hover {
+			opacity: 0.7;
+			box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+		}
 	}
 
 	img {

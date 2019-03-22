@@ -31,7 +31,7 @@ const DisplayDay = (props) => {
 				}
 			</div>
 			<div className="day-main">
-				<MoodIcon mood={day.mood} />
+				<MoodIcon mood={day.mood} selectable={false} />
 				<p className="day-note">{day.note}</p>
 			</div>
 
