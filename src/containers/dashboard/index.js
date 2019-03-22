@@ -6,6 +6,7 @@ import nprogress from 'nprogress'
 import './index.scss'
 import DayEntry from '../../components/day-entry'
 import LoadingIcon from '../../components/loading-icon'
+import TextInput from '../../components/text-input'
 import { isLoggedIn } from '../../lib/login'
 import { getDays, getToday } from '../../lib/days'
 import { getSettings } from '../../lib/settings'
@@ -20,11 +21,13 @@ class Dashboard extends React.PureComponent {
 			dayMessage: '',
 			todayMessage: '',
 			newDayActive: false,
-			settings: {}
+			settings: {},
+			searchTerm: ''
 		}
 
 		this.handleNewDay = this.handleNewDay.bind(this)
 		this.handleCloseNewDay = this.handleCloseNewDay.bind(this)
+		this.handleSearchUpdate = this.handleSearchUpdate.bind(this)
 
 		if (!isLoggedIn()) {
 			this.props.history.push('/login')
@@ -77,7 +80,15 @@ class Dashboard extends React.PureComponent {
 		this.setState({ newDayActive: false })
 	}
 
+	handleSearchUpdate(e) {
+		this.setState({ searchTerm: e.target.value })
+	}
+
 	render() {
+		const filteredDays = this.state.days.filter((day) => {
+			return day.note.toLowerCase().indexOf(this.state.searchTerm.toLowerCase()) !== -1
+		})
+
 		return (
 			<div className="content dash-content">
 				<h1>Today</h1>
@@ -108,17 +119,30 @@ class Dashboard extends React.PureComponent {
 								<div className="new-day" title="New Day" onClick={this.handleNewDay}>+</div>
 							}
 
+							<div className="dash-filters">
+								<p>Search:</p>
+								<TextInput
+									value={this.state.searchTerm}
+									onChange={this.handleSearchUpdate}
+									placeholder="Search Days"
+								/>
+							</div>
+
 							{this.state.days.length > 0 ?
-								this.state.days.map((day) => {
-									return (
-										<DayEntry
-											key={shortid.generate()}
-											day={day}
-											status="display"
-											editable={this.state.settings.editing}
-										/>
-									)
-								}) :
+								filteredDays.length > 0 ?
+									filteredDays.map((day) => {
+										return (
+											<DayEntry
+												key={shortid.generate()}
+												day={day}
+												status="display"
+												editable={this.state.settings.editing}
+												search={this.state.searchTerm}
+											/>
+										)
+									}) :
+									<h2>No entries found under search term '{this.state.searchTerm}'</h2>
+								:
 								<h2>No entries saved. Make some by clicking the + button above!</h2>
 							}
 						</React.Fragment>

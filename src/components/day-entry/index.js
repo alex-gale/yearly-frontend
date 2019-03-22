@@ -63,6 +63,7 @@ class DayEntry extends React.Component {
 						day={this.state.day}
 						onEdit={this.handleEdit}
 						editable={this.props.editable}
+						search={this.props.search}
 					/> :
 					<ActiveDayEntry
 						today={this.state.status === 'today'}
@@ -83,7 +84,8 @@ DayEntry.propTypes = {
 	status: PropTypes.oneOf(['today', 'edit', 'display', 'new']),
 	onSave: PropTypes.func,
 	onClose: PropTypes.func,
-	editable: PropTypes.bool
+	editable: PropTypes.bool,
+	search: PropTypes.string
 }
 
 DayEntry.defaultProps = {
@@ -96,7 +98,8 @@ DayEntry.defaultProps = {
 	status: 'display',
 	onSave: null,
 	onClose: null,
-	editable: false
+	editable: false,
+	search: ''
 }
 
 export default DayEntry
