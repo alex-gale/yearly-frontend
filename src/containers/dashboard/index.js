@@ -7,6 +7,7 @@ import './index.scss'
 import DayEntry from '../../components/day-entry'
 import LoadingIcon from '../../components/loading-icon'
 import TextInput from '../../components/text-input'
+import MoodFilter from '../../components/mood-filter'
 import { isLoggedIn } from '../../lib/login'
 import { getDays, getToday } from '../../lib/days'
 import { getSettings } from '../../lib/settings'
@@ -22,7 +23,8 @@ class Dashboard extends React.PureComponent {
 			todayMessage: '',
 			newDayActive: false,
 			settings: {},
-			searchTerm: ''
+			searchTerm: '',
+			filterMood: null
 		}
 
 		this.handleNewDay = this.handleNewDay.bind(this)
@@ -84,6 +86,10 @@ class Dashboard extends React.PureComponent {
 		this.setState({ searchTerm: e.target.value })
 	}
 
+	handleFilterUpdate(mood) {
+		this.setState({ filterMood: mood })
+	}
+
 	render() {
 		const filteredDays = this.state.days.filter((day) => {
 			return day.note.toLowerCase().indexOf(this.state.searchTerm.toLowerCase()) !== -1
@@ -128,24 +134,26 @@ class Dashboard extends React.PureComponent {
 								/>
 							</div>
 
-							{this.state.days.length > 0 ?
-								filteredDays.length > 0 ?
-									filteredDays.map((day) => {
-										return (
-											<DayEntry
-												key={shortid.generate()}
-												day={day}
-												status="display"
-												editable={this.state.settings.editing}
-												onSave={(day) => { this.handleSave(day) }}
-												search={this.state.searchTerm}
-											/>
-										)
-									}) :
-									<h2>No entries found under search term '{this.state.searchTerm}'</h2>
-								:
-								<h2>No entries saved. Make some by clicking the + button above!</h2>
-							}
+							<div className="entries">
+								{this.state.days.length > 0 ?
+									filteredDays.length > 0 ?
+										filteredDays.map((day) => {
+											return (
+												<DayEntry
+													key={shortid.generate()}
+													day={day}
+													status="display"
+													editable={this.state.settings.editing}
+													onSave={(day) => { this.handleSave(day) }}
+													search={this.state.searchTerm}
+												/>
+											)
+										}) :
+										<h2>No entries found under search term '{this.state.searchTerm}'</h2>
+									:
+									<h2>No entries saved. Make some by clicking the + button above!</h2>
+								}
+							</div>
 						</React.Fragment>
 				}
 			</div>
