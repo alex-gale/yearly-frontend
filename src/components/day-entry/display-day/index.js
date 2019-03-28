@@ -17,8 +17,17 @@ const getDate = (date = new Date()) => {
 }
 
 const DisplayDay = (props) => {
-	const day = props.day
+	const day = Object.assign({}, props.day)
 	const date = getDate(new Date(day.date))
+
+	if (props.search !== '') {
+		const parts = day.note.split(new RegExp(`(${props.search})`, 'gi'))
+		day.note = parts.map((part) => {
+			return part.toLowerCase() === props.search.toLowerCase() ?
+				<span key={shortid.generate()} className="highlighted">{part}</span> :
+				part
+		})
+	}
 
 	return (
 		<div className="display-day">
@@ -31,7 +40,7 @@ const DisplayDay = (props) => {
 				}
 			</div>
 			<div className="day-main">
-				<MoodIcon mood={day.mood} />
+				<MoodIcon mood={day.mood} selectable={false} />
 				<p className="day-note">{day.note}</p>
 			</div>
 
@@ -57,7 +66,8 @@ const DisplayDay = (props) => {
 DisplayDay.propTypes = {
 	day: PropTypes.object.isRequired,
 	onEdit: PropTypes.func,
-	editable: PropTypes.bool.isRequired
+	editable: PropTypes.bool.isRequired,
+	search : PropTypes.string.isRequired
 }
 
 DisplayDay.defaultProps = {

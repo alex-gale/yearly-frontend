@@ -143,6 +143,10 @@
 			font-size: 18px;
 
 			@include wrapText;
+
+			.highlighted {
+				background-color: #f4f142;
+			}
 		}
 	}
 
