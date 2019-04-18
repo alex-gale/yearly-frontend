@@ -18,6 +18,7 @@ import LoadingIcon from '../../loading-icon'
 import DateEntry from '../../date-entry'
 import ConfirmModal from '../../confirm-modal'
 import CloseIcon from '../../../assets/close.svg'
+import DeleteIcon from '../../../assets/delete.svg'
 import MoodIcon from '../../icons/mood-icon'
 import moodIcons from '../../../assets/mood-icons'
 import ItemIcon from '../../icons/item-icon'
@@ -193,7 +194,7 @@ class ActiveDayEntry extends React.Component{
 	handleDelete() {
 		this.setState({ message: '' })
 
-		deleteDay(this.state.day.date, (err, message) => {
+		deleteDay(this.state.day.storedDate, (err, message) => {
 			if (err) {
 				return this.setState({ message: err.message })
 			}
@@ -221,8 +222,13 @@ class ActiveDayEntry extends React.Component{
 					}
 
 					{!this.props.today &&
-						<div className="close-entry" onClick={this.handleClose}>
-							<img src={CloseIcon} alt="Close" />
+						<div className="manage-buttons">
+							<div className="delete-entry" onClick={this.handleDelete}>
+								<img src={DeleteIcon} alt="Delete" />
+							</div>
+							<div className="close-entry" onClick={this.handleClose}>
+								<img src={CloseIcon} alt="Close" />
+							</div>
 						</div>
 					}
 				</div>

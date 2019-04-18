@@ -15,6 +15,9 @@ class DayEntry extends React.Component {
 			status: this.props.status
 		}
 
+		// stored date
+		this.state.day.storedDate = this.state.day.date
+
 		// client utc offset
 		const utcDiff = new Date().getTimezoneOffset() / 60
 		// utc offset in data

@@ -34,8 +34,10 @@ const DisplayDay = (props) => {
 			<div className="date-display">
 				{date}
 				{props.editable &&
-					<div className="edit-entry" onClick={props.onEdit}>
-						<img src={EditIcon} alt="Edit" title="Edit" />
+					<div className="manage-buttons">
+						<div className="edit-entry" onClick={props.onEdit}>
+							<img src={EditIcon} alt="Edit" title="Edit" />
+						</div>
 					</div>
 				}
 			</div>
