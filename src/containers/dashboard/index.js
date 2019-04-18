@@ -66,7 +66,7 @@ class Dashboard extends React.PureComponent {
 		this.setState({ newDayActive: true })
 	}
 
-	handleSave() {
+	handleReload() {
 		this.setState({ loadingPrevious: true })
 
 		getDays((err, days) => {
@@ -117,7 +117,7 @@ class Dashboard extends React.PureComponent {
 								<React.Fragment>
 									<DayEntry
 										status="new"
-										onSave={(day) => { this.handleSave(day) }}
+										onReload={(day) => { this.handleReload(day) }}
 										onClose={this.handleCloseNewDay}
 									/>
 									<div className="separate-line" />
@@ -144,7 +144,7 @@ class Dashboard extends React.PureComponent {
 													day={day}
 													status="display"
 													editable={this.state.settings.editing}
-													onSave={(day) => { this.handleSave(day) }}
+													onReload={(day) => { this.handleReload(day) }}
 													search={this.state.searchTerm}
 												/>
 											)

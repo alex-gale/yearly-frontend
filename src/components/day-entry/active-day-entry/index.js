@@ -18,6 +18,7 @@ import LoadingIcon from '../../loading-icon'
 import DateEntry from '../../date-entry'
 import ConfirmModal from '../../confirm-modal'
 import CloseIcon from '../../../assets/close.svg'
+import DeleteIcon from '../../../assets/delete.svg'
 import MoodIcon from '../../icons/mood-icon'
 import moodIcons from '../../../assets/mood-icons'
 import ItemIcon from '../../icons/item-icon'
@@ -51,6 +52,7 @@ class ActiveDayEntry extends React.Component{
 		this.handleConfirmSave = this.handleConfirmSave.bind(this)
 		this.handleSave = this.handleSave.bind(this)
 		this.handleDelete = this.handleDelete.bind(this)
+		this.handleConfirmDelete = this.handleConfirmDelete.bind(this)
 		this.handleClose = this.handleClose.bind(this)
 
 		if (props.new) {
@@ -85,10 +87,10 @@ class ActiveDayEntry extends React.Component{
 			<ItemEditor
 				onClose={this.handleModalClose}
 				editType="add"
-				onSave={ (itemType) => { this.handleItemSave(itemType, null) } }
+				onReload={ (itemType) => { this.handleItemSave(itemType, null) } }
 			/>
 		)
-		this.setState({ currentModal: modal })
+		this.setState({ modal })
 	}
 
 	handleItemEdit(index) {
@@ -96,13 +98,13 @@ class ActiveDayEntry extends React.Component{
 			<ItemEditor
 				onClose={this.handleModalClose}
 				editType="edit"
-				onSave={(itemType) => { this.handleItemSave(itemType, index) }}
+				onReload={(itemType) => { this.handleItemSave(itemType, index) }}
 				onDelete={() => { this.handleItemDelete(index) }}
 				type={this.state.day.items[index]}
 			/>
 		)
 
-		this.setState({ currentModal: modal })
+		this.setState({ modal })
 	}
 
 	handleItemSave(itemType, index) {
@@ -122,11 +124,11 @@ class ActiveDayEntry extends React.Component{
 	}
 
 	handleModalClose() {
-		this.setState({ currentModal: null, pending: false })
+		this.setState({ modal: null, pending: false })
 	}
 
 	handleConfirmSave() {
-		this.setState({ submitConf: true, pending: false, currentModal: null }, () => {
+		this.setState({ submitConf: true, pending: false, modal: null }, () => {
 			this.handleSave()
 		})
 	}
@@ -162,7 +164,7 @@ class ActiveDayEntry extends React.Component{
 								onConfirm={this.handleConfirmSave}
 							/>
 						)
-						return this.setState({ currentModal: modal })
+						return this.setState({ modal })
 					} else {
 						// i*1 here because js is stupid
 						if (i*1 + 1 === dates.length) {
@@ -181,8 +183,8 @@ class ActiveDayEntry extends React.Component{
 
 				if (!this.props.today) {
 					toast.success("Day saved!")
-					this.props.onSave(day)
-					this.props.onClose()
+					this.props.onReload(day)
+					//this.props.onClose()
 				} else {
 					this.setState({ message, submittedDay: day })
 				}
@@ -191,14 +193,28 @@ class ActiveDayEntry extends React.Component{
 	}
 
 	handleDelete() {
-		this.setState({ message: '' })
+		this.setState({ message: "" })
 
-		deleteDay(this.state.day.date, (err, message) => {
+		const modal = (
+			<ConfirmModal
+				title="Delete Entry"
+				message={`Are you sure you want to delete this day entry?`}
+				onCancel={this.handleModalClose}
+				onConfirm={this.handleConfirmDelete}
+			/>
+		)
+
+		this.setState({ modal })
+	}
+
+	handleConfirmDelete() {
+		deleteDay(this.state.day.storedDate, (err, message) => {
 			if (err) {
 				return this.setState({ message: err.message })
 			}
 
-			this.setState({ message })
+			toast.error("Day removed.")
+			this.props.onReload()
 		})
 	}
 
@@ -221,8 +237,15 @@ class ActiveDayEntry extends React.Component{
 					}
 
 					{!this.props.today &&
-						<div className="close-entry" onClick={this.handleClose}>
-							<img src={CloseIcon} alt="Close" />
+						<div className="manage-buttons">
+							{!this.props.new &&
+								<div className="delete-entry" onClick={this.handleDelete}>
+									<img src={DeleteIcon} alt="Delete" />
+								</div>
+							}
+							<div className="close-entry" onClick={this.handleClose}>
+								<img src={CloseIcon} alt="Close" />
+							</div>
 						</div>
 					}
 				</div>
@@ -289,7 +312,7 @@ class ActiveDayEntry extends React.Component{
 							</Button>
 						</div>
 
-						{this.state.currentModal}
+						{this.state.modal}
 					</div>
 				}
 			</div>
@@ -299,7 +322,7 @@ class ActiveDayEntry extends React.Component{
 
 ActiveDayEntry.propTypes = {
 	day: PropTypes.object.isRequired,
-	onSave: PropTypes.func,
+	onReload: PropTypes.func,
 	onClose: PropTypes.func,
 	today: PropTypes.bool,
 	new: PropTypes.bool
@@ -307,7 +330,7 @@ ActiveDayEntry.propTypes = {
 
 ActiveDayEntry.defaultProps = {
 	onClose: null,
-	onSave: null,
+	onReload: null,
 	today: false,
 	new: false
 }
