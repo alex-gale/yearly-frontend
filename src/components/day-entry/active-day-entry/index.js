@@ -86,7 +86,7 @@ class ActiveDayEntry extends React.Component{
 			<ItemEditor
 				onClose={this.handleModalClose}
 				editType="add"
-				onSave={ (itemType) => { this.handleItemSave(itemType, null) } }
+				onReload={ (itemType) => { this.handleItemSave(itemType, null) } }
 			/>
 		)
 		this.setState({ currentModal: modal })
@@ -97,7 +97,7 @@ class ActiveDayEntry extends React.Component{
 			<ItemEditor
 				onClose={this.handleModalClose}
 				editType="edit"
-				onSave={(itemType) => { this.handleItemSave(itemType, index) }}
+				onReload={(itemType) => { this.handleItemSave(itemType, index) }}
 				onDelete={() => { this.handleItemDelete(index) }}
 				type={this.state.day.items[index]}
 			/>
@@ -182,8 +182,8 @@ class ActiveDayEntry extends React.Component{
 
 				if (!this.props.today) {
 					toast.success("Day saved!")
-					this.props.onSave(day)
-					this.props.onClose()
+					this.props.onReload(day)
+					//this.props.onClose()
 				} else {
 					this.setState({ message, submittedDay: day })
 				}
@@ -305,7 +305,7 @@ class ActiveDayEntry extends React.Component{
 
 ActiveDayEntry.propTypes = {
 	day: PropTypes.object.isRequired,
-	onSave: PropTypes.func,
+	onReload: PropTypes.func,
 	onClose: PropTypes.func,
 	today: PropTypes.bool,
 	new: PropTypes.bool
@@ -313,7 +313,7 @@ ActiveDayEntry.propTypes = {
 
 ActiveDayEntry.defaultProps = {
 	onClose: null,
-	onSave: null,
+	onReload: null,
 	today: false,
 	new: false
 }

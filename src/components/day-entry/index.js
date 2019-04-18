@@ -30,7 +30,7 @@ class DayEntry extends React.Component {
 
 		this.handleModalClose = this.handleModalClose.bind(this)
 		this.handleClose = this.handleClose.bind(this)
-		this.handleSave = this.handleSave.bind(this)
+		this.handleReload = this.handleReload.bind(this)
 		this.handleEdit = this.handleEdit.bind(this)
 	}
 
@@ -46,8 +46,8 @@ class DayEntry extends React.Component {
 		}
 	}
 
-	handleSave(day) {
-		this.props.onSave(day)
+	handleReload(day) {
+		this.props.onReload(day)
 	}
 
 	handleEdit() {
@@ -69,7 +69,7 @@ class DayEntry extends React.Component {
 						new={this.state.status === 'new'}
 						message={this.state.message}
 						day={this.state.day}
-						onSave={(day) => { this.handleSave(day) }}
+						onReload={(day) => { this.handleReload(day) }}
 						onClose={this.handleClose}
 					/>
 				}
@@ -81,7 +81,7 @@ class DayEntry extends React.Component {
 DayEntry.propTypes = {
 	day: PropTypes.object,
 	status: PropTypes.oneOf(['today', 'edit', 'display', 'new']),
-	onSave: PropTypes.func,
+	onReload: PropTypes.func,
 	onClose: PropTypes.func,
 	editable: PropTypes.bool,
 	search: PropTypes.string
@@ -95,7 +95,7 @@ DayEntry.defaultProps = {
 		items: []
 	},
 	status: 'display',
-	onSave: null,
+	onReload: null,
 	onClose: null,
 	editable: false,
 	search: ''
