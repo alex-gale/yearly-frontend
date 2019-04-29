@@ -1,18 +1,45 @@
 .text-input {
 	width: 100%;
 	max-width: 500px;
-	padding: 10px;
-	font-size: 20px;
-	outline: none;
-	border: 1px solid #a7a7a7;
-	border-radius: 10px;
-	transition: 0.5s;
+	position: relative;
 
-	&:focus {
-		border: 1px solid black;
+	.text-input-main {
+		width: 100%;
+		padding: 10px;
+		font-size: 20px;
+		outline: none;
+		border: 1px solid #a7a7a7;
+		border-radius: 10px;
+		transition: 0.5s;
+
+		&:focus {
+			border: 1px solid black;
+
+			&+span {
+				transform: translateY(-23px) translateX(-10px) scale(.75);
+				background-color: white;
+				padding-left: 3px;
+				padding-right: 3px;
+			}
+		}
+
+		&:not(:placeholder-shown) {
+			&+span {
+				transform: translateY(-23px) translateX(-10px) scale(.75);
+				background-color: white;
+				padding-left: 3px;
+				padding-right: 3px;
+			}
+		}
 	}
 
-	&::placeholder {
+	.label {
+		position: absolute;
 		color: #7d7d7d;
+		left: 10px;
+		top: 11px;
+		font-size: 20px;
+		user-select: none;
+		transition: 0.15s all ease;
 	}
 }

@@ -55,7 +55,7 @@ class Register extends React.Component {
 		if (password === confirmPassword) {
 			register(inviteCode, username, email, password, (err) => {
 			    nprogress.done()
-			    
+
 				if (err) {
 					this.setState({ pending: false })
 					return this.setState({ message: err.message })
@@ -90,7 +90,7 @@ class Register extends React.Component {
 									<TextInput
 										value={this.state.inviteCode}
 										onChange={this.handleChange}
-										placeholder="Invite Code"
+										label="Invite Code"
 										name="inviteCode"
 										required
 									/>
@@ -99,7 +99,7 @@ class Register extends React.Component {
 									<TextInput
 										value={this.state.username}
 										onChange={this.handleChange}
-										placeholder="Username"
+										label="Username"
 										name="username"
 										maxLength="16"
 										minLength="3"
@@ -108,7 +108,7 @@ class Register extends React.Component {
 									<TextInput
 										value={this.state.email}
 										onChange={this.handleChange}
-										placeholder="Email"
+										label="Email"
 										name="email"
 										required
 									/>
@@ -117,7 +117,7 @@ class Register extends React.Component {
 									<TextInput
 										value={this.state.password}
 										onChange={this.handleChange}
-										placeholder="Password"
+										label="Password"
 										type="password"
 										name="password"
 										minLength="6"
@@ -126,7 +126,7 @@ class Register extends React.Component {
 									<TextInput
 										value={this.state.confirmPassword}
 										onChange={this.handleChange}
-										placeholder="Confirm Password"
+										label="Confirm Password"
 										type="password"
 										name="confirmPassword"
 										minLength="6"

@@ -70,18 +70,18 @@ class Login extends React.Component {
 						<TextInput
 							value={this.state.username}
 							onChange={this.handleChange}
-							placeholder="Email/Username"
 							id="username"
 							name="username"
+							label="Email/Username"
 							maxLength="16"
 							required
 						/>
 						<TextInput
 							value={this.state.password}
 							onChange={this.handleChange}
-							placeholder="Password"
 							type="password"
 							id="password"
+							label="Password"
 							name="password"
 							minLength="6"
 							required
